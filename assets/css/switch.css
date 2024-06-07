@@ -1,0 +1,4857 @@
+html, body {
+    height: 100%;
+    background: linear-gradient(155deg, #0a2234 0%, #0a2234 33%, #0c5f86 48%, #0c5f86 65%, #70becb 100%);
+    background-size: 100% 250%;
+    overflow: hidden;
+    transition: all 1s ease;
+  }
+  
+  body.day {
+    background-position-y: 100%;
+    background-size: 100% 400%;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .checkbox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  .checkbox input {
+    display: none;
+  }
+  .checkbox input + label {
+    display: block;
+    position: relative;
+    width: 195px;
+    height: 100px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 1s ease;
+  }
+  .checkbox input + label:before {
+    content: "";
+    display: inherit;
+    position: absolute;
+    left: 10px;
+    width: 77.5px;
+    height: 80px;
+    background: #fff;
+    border-radius: inherit;
+    box-shadow: 0 0 65px rgba(255, 255, 255, 0.5);
+    transition: all 1s ease;
+  }
+  .checkbox input:checked + label {
+    background: rgba(0, 0, 0, 0.15);
+  }
+  .checkbox input:checked + label:before {
+    left: 107.5px;
+    background: #fdc472;
+    box-shadow: 0 0 65px rgba(253, 196, 114, 0.5);
+  }
+  
+  body.night .night, body.day .day {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  div.day {
+    transition: all 1s ease;
+    visibility: hidden;
+    opacity: 0;
+  }
+  div.day .cloud {
+    width: 180px;
+    height: 100px;
+    position: absolute;
+    background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 257 140"><path fill="#FFFFFF" d="M11.7,128.6h240.3c0.1-1.4,0.1-2.8-0.1-4.2c-0.7-7.6-4.5-14.8-10.3-19.7 c-6.5-5.5-13.7-6.9-21.9-6.9c-1.4,0-2.8,0.1-4.2,0.4c1.7-4.7,2.3-9.7,1.9-14.7c-0.8-8.8-5.2-17.1-11.9-22.8 c-2.5-1.6-5-3.2-7.4-4.8c-1.3-0.6-2.6-1.1-4-1.6c0.5-3.5,0.6-7.1,0.3-10.7c-1.1-11.8-6.9-23-16-30.7c-3.3-2.2-6.7-4.3-10-6.5 c-7.6-3.6-15.6-5-24-4.2c-3.9,0.9-7.7,1.8-11.6,2.7c-7.5,2.8-13.9,7.3-19.1,13.4c-4.4,5.1-7.5,11.2-9.2,17.6 c-0.1-0.1-0.3-0.2-0.4-0.4c-2.5-1.6-5-3.2-7.5-4.8c-5.7-2.7-11.7-3.7-18-3.2c-2.9,0.7-5.8,1.3-8.7,2c-5.6,2.1-10.4,5.4-14.3,10 c-5.9,7-8.9,16.3-8,25.4c0.2,2.3,0.7,4.5,1.3,6.7c-2-0.7-4-1.3-6.1-1.7c-3-0.1-6-0.3-9.1-0.4C28,70,22.6,72,17.7,75.4 c-0.1,0.1-0.2,0.1-0.3,0.2c-2.1,2-4.3,3.9-6.4,5.8c-2.3,2.7-4.1,5.7-5.4,8.8c-0.1,0.2-0.2,0.4-0.4,0.6c-0.9,2.8-1.8,5.7-2.7,8.5 c-1,5.9-0.5,11.7,1.6,17.3C5.7,121.1,8.4,125.2,11.7,128.6z"/></svg>');
+    background-size: 100% 100%;
+  }
+  div.day .cloud[data-cloud="1"] {
+    top: 3%;
+    width: 139px;
+    height: 61px;
+    opacity: 0;
+    -webkit-animation: cloud-1 99s linear 2.1s infinite;
+            animation: cloud-1 99s linear 2.1s infinite;
+  }
+  @-webkit-keyframes cloud-1 {
+    0% {
+      opacity: 0;
+      left: 30%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-1 {
+    0% {
+      opacity: 0;
+      left: 30%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="2"] {
+    top: 13%;
+    width: 110px;
+    height: 61px;
+    opacity: 0;
+    -webkit-animation: cloud-2 26s linear 7.4s infinite;
+            animation: cloud-2 26s linear 7.4s infinite;
+  }
+  @-webkit-keyframes cloud-2 {
+    0% {
+      opacity: 0;
+      left: 22%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-2 {
+    0% {
+      opacity: 0;
+      left: 22%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="3"] {
+    top: 40%;
+    width: 71px;
+    height: 98px;
+    opacity: 0;
+    -webkit-animation: cloud-3 12s linear 0.6s infinite;
+            animation: cloud-3 12s linear 0.6s infinite;
+  }
+  @-webkit-keyframes cloud-3 {
+    0% {
+      opacity: 0;
+      left: 78%;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-3 {
+    0% {
+      opacity: 0;
+      left: 78%;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="4"] {
+    top: 46%;
+    width: 74px;
+    height: 77px;
+    opacity: 0;
+    -webkit-animation: cloud-4 107s linear 0.2s infinite;
+            animation: cloud-4 107s linear 0.2s infinite;
+  }
+  @-webkit-keyframes cloud-4 {
+    0% {
+      opacity: 0;
+      left: 55%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-4 {
+    0% {
+      opacity: 0;
+      left: 55%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="5"] {
+    top: 9%;
+    width: 162px;
+    height: 98px;
+    opacity: 0;
+    -webkit-animation: cloud-5 96s linear 6.2s infinite;
+            animation: cloud-5 96s linear 6.2s infinite;
+  }
+  @-webkit-keyframes cloud-5 {
+    0% {
+      opacity: 0;
+      left: 86%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-5 {
+    0% {
+      opacity: 0;
+      left: 86%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="6"] {
+    top: 56%;
+    width: 127px;
+    height: 53px;
+    opacity: 0;
+    -webkit-animation: cloud-6 57s linear 2.2s infinite;
+            animation: cloud-6 57s linear 2.2s infinite;
+  }
+  @-webkit-keyframes cloud-6 {
+    0% {
+      opacity: 0;
+      left: 39%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-6 {
+    0% {
+      opacity: 0;
+      left: 39%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="7"] {
+    top: 24%;
+    width: 125px;
+    height: 51px;
+    opacity: 0;
+    -webkit-animation: cloud-7 138s linear 5.4s infinite;
+            animation: cloud-7 138s linear 5.4s infinite;
+  }
+  @-webkit-keyframes cloud-7 {
+    0% {
+      opacity: 0;
+      left: 4%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-7 {
+    0% {
+      opacity: 0;
+      left: 4%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="8"] {
+    top: 73%;
+    width: 103px;
+    height: 61px;
+    opacity: 0;
+    -webkit-animation: cloud-8 81s linear 8.6s infinite;
+            animation: cloud-8 81s linear 8.6s infinite;
+  }
+  @-webkit-keyframes cloud-8 {
+    0% {
+      opacity: 0;
+      left: 49%;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-8 {
+    0% {
+      opacity: 0;
+      left: 49%;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="9"] {
+    top: 64%;
+    width: 113px;
+    height: 71px;
+    opacity: 0;
+    -webkit-animation: cloud-9 60s linear 0.3s infinite;
+            animation: cloud-9 60s linear 0.3s infinite;
+  }
+  @-webkit-keyframes cloud-9 {
+    0% {
+      opacity: 0;
+      left: 88%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-9 {
+    0% {
+      opacity: 0;
+      left: 88%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="10"] {
+    top: 2%;
+    width: 84px;
+    height: 77px;
+    opacity: 0;
+    -webkit-animation: cloud-10 34s linear 0.3s infinite;
+            animation: cloud-10 34s linear 0.3s infinite;
+  }
+  @-webkit-keyframes cloud-10 {
+    0% {
+      opacity: 0;
+      left: 34%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-10 {
+    0% {
+      opacity: 0;
+      left: 34%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="11"] {
+    top: 79%;
+    width: 156px;
+    height: 86px;
+    opacity: 0;
+    -webkit-animation: cloud-11 112s linear 0.3s infinite;
+            animation: cloud-11 112s linear 0.3s infinite;
+  }
+  @-webkit-keyframes cloud-11 {
+    0% {
+      opacity: 0;
+      left: 50%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-11 {
+    0% {
+      opacity: 0;
+      left: 50%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="12"] {
+    top: 97%;
+    width: 136px;
+    height: 94px;
+    opacity: 0;
+    -webkit-animation: cloud-12 90s linear 8.7s infinite;
+            animation: cloud-12 90s linear 8.7s infinite;
+  }
+  @-webkit-keyframes cloud-12 {
+    0% {
+      opacity: 0;
+      left: 29%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-12 {
+    0% {
+      opacity: 0;
+      left: 29%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="13"] {
+    top: 48%;
+    width: 116px;
+    height: 97px;
+    opacity: 0;
+    -webkit-animation: cloud-13 30s linear 9.4s infinite;
+            animation: cloud-13 30s linear 9.4s infinite;
+  }
+  @-webkit-keyframes cloud-13 {
+    0% {
+      opacity: 0;
+      left: 20%;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-13 {
+    0% {
+      opacity: 0;
+      left: 20%;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="14"] {
+    top: 1%;
+    width: 131px;
+    height: 70px;
+    opacity: 0;
+    -webkit-animation: cloud-14 100s linear 2.1s infinite;
+            animation: cloud-14 100s linear 2.1s infinite;
+  }
+  @-webkit-keyframes cloud-14 {
+    0% {
+      opacity: 0;
+      left: 38%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-14 {
+    0% {
+      opacity: 0;
+      left: 38%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="15"] {
+    top: 38%;
+    width: 99px;
+    height: 80px;
+    opacity: 0;
+    -webkit-animation: cloud-15 73s linear 1.7s infinite;
+            animation: cloud-15 73s linear 1.7s infinite;
+  }
+  @-webkit-keyframes cloud-15 {
+    0% {
+      opacity: 0;
+      left: 37%;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-15 {
+    0% {
+      opacity: 0;
+      left: 37%;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="16"] {
+    top: 46%;
+    width: 116px;
+    height: 62px;
+    opacity: 0;
+    -webkit-animation: cloud-16 153s linear 7.3s infinite;
+            animation: cloud-16 153s linear 7.3s infinite;
+  }
+  @-webkit-keyframes cloud-16 {
+    0% {
+      opacity: 0;
+      left: 16%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-16 {
+    0% {
+      opacity: 0;
+      left: 16%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="17"] {
+    top: 44%;
+    width: 118px;
+    height: 72px;
+    opacity: 0;
+    -webkit-animation: cloud-17 135s linear 0.5s infinite;
+            animation: cloud-17 135s linear 0.5s infinite;
+  }
+  @-webkit-keyframes cloud-17 {
+    0% {
+      opacity: 0;
+      left: 95%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-17 {
+    0% {
+      opacity: 0;
+      left: 95%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="18"] {
+    top: 18%;
+    width: 75px;
+    height: 65px;
+    opacity: 0;
+    -webkit-animation: cloud-18 136s linear 1.6s infinite;
+            animation: cloud-18 136s linear 1.6s infinite;
+  }
+  @-webkit-keyframes cloud-18 {
+    0% {
+      opacity: 0;
+      left: 22%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-18 {
+    0% {
+      opacity: 0;
+      left: 22%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="19"] {
+    top: 16%;
+    width: 77px;
+    height: 60px;
+    opacity: 0;
+    -webkit-animation: cloud-19 102s linear 2.3s infinite;
+            animation: cloud-19 102s linear 2.3s infinite;
+  }
+  @-webkit-keyframes cloud-19 {
+    0% {
+      opacity: 0;
+      left: 11%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-19 {
+    0% {
+      opacity: 0;
+      left: 11%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="20"] {
+    top: 1%;
+    width: 178px;
+    height: 91px;
+    opacity: 0;
+    -webkit-animation: cloud-20 120s linear 7.6s infinite;
+            animation: cloud-20 120s linear 7.6s infinite;
+  }
+  @-webkit-keyframes cloud-20 {
+    0% {
+      opacity: 0;
+      left: 37%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-20 {
+    0% {
+      opacity: 0;
+      left: 37%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="21"] {
+    top: 35%;
+    width: 165px;
+    height: 98px;
+    opacity: 0;
+    -webkit-animation: cloud-21 148s linear 8.9s infinite;
+            animation: cloud-21 148s linear 8.9s infinite;
+  }
+  @-webkit-keyframes cloud-21 {
+    0% {
+      opacity: 0;
+      left: 74%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-21 {
+    0% {
+      opacity: 0;
+      left: 74%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="22"] {
+    top: 50%;
+    width: 154px;
+    height: 52px;
+    opacity: 0;
+    -webkit-animation: cloud-22 135s linear 7s infinite;
+            animation: cloud-22 135s linear 7s infinite;
+  }
+  @-webkit-keyframes cloud-22 {
+    0% {
+      opacity: 0;
+      left: 45%;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-22 {
+    0% {
+      opacity: 0;
+      left: 45%;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="23"] {
+    top: 43%;
+    width: 158px;
+    height: 87px;
+    opacity: 0;
+    -webkit-animation: cloud-23 93s linear 8.8s infinite;
+            animation: cloud-23 93s linear 8.8s infinite;
+  }
+  @-webkit-keyframes cloud-23 {
+    0% {
+      opacity: 0;
+      left: 41%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-23 {
+    0% {
+      opacity: 0;
+      left: 41%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="24"] {
+    top: 18%;
+    width: 119px;
+    height: 60px;
+    opacity: 0;
+    -webkit-animation: cloud-24 129s linear 8.2s infinite;
+            animation: cloud-24 129s linear 8.2s infinite;
+  }
+  @-webkit-keyframes cloud-24 {
+    0% {
+      opacity: 0;
+      left: 23%;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-24 {
+    0% {
+      opacity: 0;
+      left: 23%;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="25"] {
+    top: 96%;
+    width: 144px;
+    height: 76px;
+    opacity: 0;
+    -webkit-animation: cloud-25 128s linear 5.1s infinite;
+            animation: cloud-25 128s linear 5.1s infinite;
+  }
+  @-webkit-keyframes cloud-25 {
+    0% {
+      opacity: 0;
+      left: 65%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-25 {
+    0% {
+      opacity: 0;
+      left: 65%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="26"] {
+    top: 85%;
+    width: 85px;
+    height: 54px;
+    opacity: 0;
+    -webkit-animation: cloud-26 67s linear 8s infinite;
+            animation: cloud-26 67s linear 8s infinite;
+  }
+  @-webkit-keyframes cloud-26 {
+    0% {
+      opacity: 0;
+      left: 58%;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-26 {
+    0% {
+      opacity: 0;
+      left: 58%;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="27"] {
+    top: 42%;
+    width: 153px;
+    height: 59px;
+    opacity: 0;
+    -webkit-animation: cloud-27 112s linear 2.2s infinite;
+            animation: cloud-27 112s linear 2.2s infinite;
+  }
+  @-webkit-keyframes cloud-27 {
+    0% {
+      opacity: 0;
+      left: 97%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-27 {
+    0% {
+      opacity: 0;
+      left: 97%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="28"] {
+    top: 51%;
+    width: 103px;
+    height: 94px;
+    opacity: 0;
+    -webkit-animation: cloud-28 66s linear 1.8s infinite;
+            animation: cloud-28 66s linear 1.8s infinite;
+  }
+  @-webkit-keyframes cloud-28 {
+    0% {
+      opacity: 0;
+      left: 97%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-28 {
+    0% {
+      opacity: 0;
+      left: 97%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="29"] {
+    top: 63%;
+    width: 180px;
+    height: 97px;
+    opacity: 0;
+    -webkit-animation: cloud-29 49s linear 5.8s infinite;
+            animation: cloud-29 49s linear 5.8s infinite;
+  }
+  @-webkit-keyframes cloud-29 {
+    0% {
+      opacity: 0;
+      left: 69%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-29 {
+    0% {
+      opacity: 0;
+      left: 69%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="30"] {
+    top: 91%;
+    width: 137px;
+    height: 80px;
+    opacity: 0;
+    -webkit-animation: cloud-30 103s linear 9.5s infinite;
+            animation: cloud-30 103s linear 9.5s infinite;
+  }
+  @-webkit-keyframes cloud-30 {
+    0% {
+      opacity: 0;
+      left: 73%;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-30 {
+    0% {
+      opacity: 0;
+      left: 73%;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="31"] {
+    top: 31%;
+    width: 116px;
+    height: 64px;
+    opacity: 0;
+    -webkit-animation: cloud-31 46s linear 4.6s infinite;
+            animation: cloud-31 46s linear 4.6s infinite;
+  }
+  @-webkit-keyframes cloud-31 {
+    0% {
+      opacity: 0;
+      left: 60%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-31 {
+    0% {
+      opacity: 0;
+      left: 60%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="32"] {
+    top: 28%;
+    width: 160px;
+    height: 57px;
+    opacity: 0;
+    -webkit-animation: cloud-32 127s linear 4.7s infinite;
+            animation: cloud-32 127s linear 4.7s infinite;
+  }
+  @-webkit-keyframes cloud-32 {
+    0% {
+      opacity: 0;
+      left: 92%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-32 {
+    0% {
+      opacity: 0;
+      left: 92%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="33"] {
+    top: 74%;
+    width: 156px;
+    height: 52px;
+    opacity: 0;
+    -webkit-animation: cloud-33 96s linear 1.8s infinite;
+            animation: cloud-33 96s linear 1.8s infinite;
+  }
+  @-webkit-keyframes cloud-33 {
+    0% {
+      opacity: 0;
+      left: 89%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-33 {
+    0% {
+      opacity: 0;
+      left: 89%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="34"] {
+    top: 69%;
+    width: 165px;
+    height: 55px;
+    opacity: 0;
+    -webkit-animation: cloud-34 29s linear 8.5s infinite;
+            animation: cloud-34 29s linear 8.5s infinite;
+  }
+  @-webkit-keyframes cloud-34 {
+    0% {
+      opacity: 0;
+      left: 10%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-34 {
+    0% {
+      opacity: 0;
+      left: 10%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="35"] {
+    top: 8%;
+    width: 96px;
+    height: 81px;
+    opacity: 0;
+    -webkit-animation: cloud-35 95s linear 1.7s infinite;
+            animation: cloud-35 95s linear 1.7s infinite;
+  }
+  @-webkit-keyframes cloud-35 {
+    0% {
+      opacity: 0;
+      left: 8%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-35 {
+    0% {
+      opacity: 0;
+      left: 8%;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="36"] {
+    top: 14%;
+    width: 82px;
+    height: 77px;
+    opacity: 0;
+    -webkit-animation: cloud-36 118s linear 9.5s infinite;
+            animation: cloud-36 118s linear 9.5s infinite;
+  }
+  @-webkit-keyframes cloud-36 {
+    0% {
+      opacity: 0;
+      left: 19%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-36 {
+    0% {
+      opacity: 0;
+      left: 19%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="37"] {
+    top: 13%;
+    width: 142px;
+    height: 90px;
+    opacity: 0;
+    -webkit-animation: cloud-37 108s linear 4.7s infinite;
+            animation: cloud-37 108s linear 4.7s infinite;
+  }
+  @-webkit-keyframes cloud-37 {
+    0% {
+      opacity: 0;
+      left: 97%;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-37 {
+    0% {
+      opacity: 0;
+      left: 97%;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="38"] {
+    top: 58%;
+    width: 151px;
+    height: 77px;
+    opacity: 0;
+    -webkit-animation: cloud-38 124s linear 3.2s infinite;
+            animation: cloud-38 124s linear 3.2s infinite;
+  }
+  @-webkit-keyframes cloud-38 {
+    0% {
+      opacity: 0;
+      left: 41%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-38 {
+    0% {
+      opacity: 0;
+      left: 41%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="39"] {
+    top: 69%;
+    width: 170px;
+    height: 61px;
+    opacity: 0;
+    -webkit-animation: cloud-39 24s linear 5.5s infinite;
+            animation: cloud-39 24s linear 5.5s infinite;
+  }
+  @-webkit-keyframes cloud-39 {
+    0% {
+      opacity: 0;
+      left: 19%;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-39 {
+    0% {
+      opacity: 0;
+      left: 19%;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="40"] {
+    top: 16%;
+    width: 133px;
+    height: 56px;
+    opacity: 0;
+    -webkit-animation: cloud-40 110s linear 9.6s infinite;
+            animation: cloud-40 110s linear 9.6s infinite;
+  }
+  @-webkit-keyframes cloud-40 {
+    0% {
+      opacity: 0;
+      left: 50%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-40 {
+    0% {
+      opacity: 0;
+      left: 50%;
+    }
+    20% {
+      opacity: 0.1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="41"] {
+    top: 42%;
+    width: 84px;
+    height: 75px;
+    opacity: 0;
+    -webkit-animation: cloud-41 155s linear 4.7s infinite;
+            animation: cloud-41 155s linear 4.7s infinite;
+  }
+  @-webkit-keyframes cloud-41 {
+    0% {
+      opacity: 0;
+      left: 76%;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-41 {
+    0% {
+      opacity: 0;
+      left: 76%;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="42"] {
+    top: 62%;
+    width: 92px;
+    height: 54px;
+    opacity: 0;
+    -webkit-animation: cloud-42 44s linear 5.4s infinite;
+            animation: cloud-42 44s linear 5.4s infinite;
+  }
+  @-webkit-keyframes cloud-42 {
+    0% {
+      opacity: 0;
+      left: 12%;
+    }
+    20% {
+      opacity: 0.9;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-42 {
+    0% {
+      opacity: 0;
+      left: 12%;
+    }
+    20% {
+      opacity: 0.9;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="43"] {
+    top: 27%;
+    width: 172px;
+    height: 72px;
+    opacity: 0;
+    -webkit-animation: cloud-43 53s linear 1s infinite;
+            animation: cloud-43 53s linear 1s infinite;
+  }
+  @-webkit-keyframes cloud-43 {
+    0% {
+      opacity: 0;
+      left: 3%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-43 {
+    0% {
+      opacity: 0;
+      left: 3%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="44"] {
+    top: 83%;
+    width: 134px;
+    height: 83px;
+    opacity: 0;
+    -webkit-animation: cloud-44 85s linear 1.7s infinite;
+            animation: cloud-44 85s linear 1.7s infinite;
+  }
+  @-webkit-keyframes cloud-44 {
+    0% {
+      opacity: 0;
+      left: 14%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-44 {
+    0% {
+      opacity: 0;
+      left: 14%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="45"] {
+    top: 2%;
+    width: 111px;
+    height: 75px;
+    opacity: 0;
+    -webkit-animation: cloud-45 22s linear 7.8s infinite;
+            animation: cloud-45 22s linear 7.8s infinite;
+  }
+  @-webkit-keyframes cloud-45 {
+    0% {
+      opacity: 0;
+      left: 59%;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-45 {
+    0% {
+      opacity: 0;
+      left: 59%;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="46"] {
+    top: 63%;
+    width: 98px;
+    height: 99px;
+    opacity: 0;
+    -webkit-animation: cloud-46 15s linear 6.6s infinite;
+            animation: cloud-46 15s linear 6.6s infinite;
+  }
+  @-webkit-keyframes cloud-46 {
+    0% {
+      opacity: 0;
+      left: 37%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-46 {
+    0% {
+      opacity: 0;
+      left: 37%;
+    }
+    20% {
+      opacity: 0.7;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="47"] {
+    top: 40%;
+    width: 160px;
+    height: 60px;
+    opacity: 0;
+    -webkit-animation: cloud-47 13s linear 0.2s infinite;
+            animation: cloud-47 13s linear 0.2s infinite;
+  }
+  @-webkit-keyframes cloud-47 {
+    0% {
+      opacity: 0;
+      left: 56%;
+    }
+    20% {
+      opacity: 0.9;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-47 {
+    0% {
+      opacity: 0;
+      left: 56%;
+    }
+    20% {
+      opacity: 0.9;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="48"] {
+    top: 74%;
+    width: 134px;
+    height: 72px;
+    opacity: 0;
+    -webkit-animation: cloud-48 15s linear 7.4s infinite;
+            animation: cloud-48 15s linear 7.4s infinite;
+  }
+  @-webkit-keyframes cloud-48 {
+    0% {
+      opacity: 0;
+      left: 42%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-48 {
+    0% {
+      opacity: 0;
+      left: 42%;
+    }
+    20% {
+      opacity: 0.3;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="49"] {
+    top: 75%;
+    width: 90px;
+    height: 74px;
+    opacity: 0;
+    -webkit-animation: cloud-49 100s linear 7.5s infinite;
+            animation: cloud-49 100s linear 7.5s infinite;
+  }
+  @-webkit-keyframes cloud-49 {
+    0% {
+      opacity: 0;
+      left: 5%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-49 {
+    0% {
+      opacity: 0;
+      left: 5%;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  div.day .cloud[data-cloud="50"] {
+    top: 27%;
+    width: 140px;
+    height: 71px;
+    opacity: 0;
+    -webkit-animation: cloud-50 132s linear 7.3s infinite;
+            animation: cloud-50 132s linear 7.3s infinite;
+  }
+  @-webkit-keyframes cloud-50 {
+    0% {
+      opacity: 0;
+      left: 39%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  @keyframes cloud-50 {
+    0% {
+      opacity: 0;
+      left: 39%;
+    }
+    20% {
+      opacity: 0.5;
+    }
+    100% {
+      left: -180px;
+    }
+  }
+  
+  div.night {
+    transition: all 1s ease;
+    visibility: hidden;
+    opacity: 0;
+  }
+  div.night .star {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: #fff;
+    border-radius: 100%;
+    -webkit-animation: glow infinite linear alternate 2s;
+            animation: glow infinite linear alternate 2s;
+  }
+  @-webkit-keyframes glow {
+    from {
+      box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.45);
+    }
+    to {
+      box-shadow: 0 0 10px 1px transparent;
+    }
+  }
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.45);
+    }
+    to {
+      box-shadow: 0 0 10px 1px transparent;
+    }
+  }
+  div.night .star[data-star="1"] {
+    top: 58%;
+    left: 96%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="2"] {
+    top: 89%;
+    left: 25%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="3"] {
+    top: 96%;
+    left: 49%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="4"] {
+    top: 59%;
+    left: 85%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="5"] {
+    top: 49%;
+    left: 40%;
+    opacity: 0.1;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="6"] {
+    top: 50%;
+    left: 81%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="7"] {
+    top: 99%;
+    left: 43%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="8"] {
+    top: 59%;
+    left: 70%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="9"] {
+    top: 38%;
+    left: 74%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="10"] {
+    top: 62%;
+    left: 87%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="11"] {
+    top: 92%;
+    left: 93%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="12"] {
+    top: 45%;
+    left: 80%;
+    opacity: 0.2;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="13"] {
+    top: 100%;
+    left: 40%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="14"] {
+    top: 26%;
+    left: 44%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="15"] {
+    top: 41%;
+    left: 1%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="16"] {
+    top: 61%;
+    left: 33%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="17"] {
+    top: 17%;
+    left: 63%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="18"] {
+    top: 100%;
+    left: 51%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="19"] {
+    top: 48%;
+    left: 73%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="20"] {
+    top: 42%;
+    left: 86%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="21"] {
+    top: 27%;
+    left: 84%;
+    opacity: 0.6;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="22"] {
+    top: 32%;
+    left: 46%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="23"] {
+    top: 48%;
+    left: 3%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="24"] {
+    top: 96%;
+    left: 37%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="25"] {
+    top: 2%;
+    left: 80%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="26"] {
+    top: 2%;
+    left: 62%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="27"] {
+    top: 40%;
+    left: 15%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="28"] {
+    top: 29%;
+    left: 75%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="29"] {
+    top: 8%;
+    left: 73%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="30"] {
+    top: 24%;
+    left: 96%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="31"] {
+    top: 53%;
+    left: 2%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="32"] {
+    top: 51%;
+    left: 84%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="33"] {
+    top: 83%;
+    left: 27%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="34"] {
+    top: 31%;
+    left: 31%;
+    opacity: 1;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="35"] {
+    top: 82%;
+    left: 18%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="36"] {
+    top: 87%;
+    left: 37%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="37"] {
+    top: 23%;
+    left: 97%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="38"] {
+    top: 81%;
+    left: 89%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="39"] {
+    top: 89%;
+    left: 54%;
+    opacity: 1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="40"] {
+    top: 42%;
+    left: 71%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="41"] {
+    top: 23%;
+    left: 46%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="42"] {
+    top: 91%;
+    left: 47%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="43"] {
+    top: 81%;
+    left: 33%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="44"] {
+    top: 22%;
+    left: 87%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="45"] {
+    top: 11%;
+    left: 23%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="46"] {
+    top: 27%;
+    left: 2%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="47"] {
+    top: 17%;
+    left: 60%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="48"] {
+    top: 46%;
+    left: 27%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="49"] {
+    top: 2%;
+    left: 34%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="50"] {
+    top: 30%;
+    left: 49%;
+    opacity: 0.1;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="51"] {
+    top: 25%;
+    left: 44%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="52"] {
+    top: 42%;
+    left: 52%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="53"] {
+    top: 84%;
+    left: 72%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="54"] {
+    top: 95%;
+    left: 55%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="55"] {
+    top: 36%;
+    left: 19%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="56"] {
+    top: 47%;
+    left: 16%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="57"] {
+    top: 96%;
+    left: 37%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="58"] {
+    top: 29%;
+    left: 24%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="59"] {
+    top: 20%;
+    left: 55%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="60"] {
+    top: 29%;
+    left: 85%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="61"] {
+    top: 7%;
+    left: 51%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="62"] {
+    top: 76%;
+    left: 75%;
+    opacity: 1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="63"] {
+    top: 10%;
+    left: 53%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="64"] {
+    top: 34%;
+    left: 74%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="65"] {
+    top: 90%;
+    left: 59%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="66"] {
+    top: 5%;
+    left: 78%;
+    opacity: 1;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="67"] {
+    top: 39%;
+    left: 26%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="68"] {
+    top: 70%;
+    left: 92%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="69"] {
+    top: 36%;
+    left: 6%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="70"] {
+    top: 3%;
+    left: 33%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="71"] {
+    top: 29%;
+    left: 34%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="72"] {
+    top: 22%;
+    left: 5%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="73"] {
+    top: 52%;
+    left: 5%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="74"] {
+    top: 58%;
+    left: 71%;
+    opacity: 1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="75"] {
+    top: 48%;
+    left: 83%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="76"] {
+    top: 8%;
+    left: 75%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="77"] {
+    top: 46%;
+    left: 77%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="78"] {
+    top: 14%;
+    left: 79%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="79"] {
+    top: 55%;
+    left: 1%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="80"] {
+    top: 38%;
+    left: 93%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="81"] {
+    top: 69%;
+    left: 18%;
+    opacity: 0.4;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="82"] {
+    top: 89%;
+    left: 3%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="83"] {
+    top: 2%;
+    left: 85%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="84"] {
+    top: 58%;
+    left: 2%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="85"] {
+    top: 79%;
+    left: 77%;
+    opacity: 1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="86"] {
+    top: 15%;
+    left: 94%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="87"] {
+    top: 98%;
+    left: 3%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="88"] {
+    top: 43%;
+    left: 54%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="89"] {
+    top: 6%;
+    left: 46%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="90"] {
+    top: 36%;
+    left: 96%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="91"] {
+    top: 6%;
+    left: 50%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="92"] {
+    top: 91%;
+    left: 59%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="93"] {
+    top: 45%;
+    left: 81%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="94"] {
+    top: 61%;
+    left: 37%;
+    opacity: 0.7;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="95"] {
+    top: 43%;
+    left: 41%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="96"] {
+    top: 23%;
+    left: 9%;
+    opacity: 0.5;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="97"] {
+    top: 29%;
+    left: 49%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="98"] {
+    top: 50%;
+    left: 54%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="99"] {
+    top: 37%;
+    left: 44%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="100"] {
+    top: 75%;
+    left: 45%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="101"] {
+    top: 13%;
+    left: 17%;
+    opacity: 1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="102"] {
+    top: 23%;
+    left: 54%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="103"] {
+    top: 15%;
+    left: 59%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="104"] {
+    top: 87%;
+    left: 38%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="105"] {
+    top: 90%;
+    left: 72%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="106"] {
+    top: 75%;
+    left: 23%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="107"] {
+    top: 36%;
+    left: 30%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="108"] {
+    top: 97%;
+    left: 7%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="109"] {
+    top: 60%;
+    left: 89%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="110"] {
+    top: 61%;
+    left: 78%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="111"] {
+    top: 15%;
+    left: 48%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="112"] {
+    top: 48%;
+    left: 100%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="113"] {
+    top: 84%;
+    left: 6%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="114"] {
+    top: 36%;
+    left: 77%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="115"] {
+    top: 2%;
+    left: 5%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="116"] {
+    top: 12%;
+    left: 13%;
+    opacity: 0.5;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="117"] {
+    top: 94%;
+    left: 14%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="118"] {
+    top: 94%;
+    left: 89%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="119"] {
+    top: 37%;
+    left: 83%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="120"] {
+    top: 3%;
+    left: 58%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="121"] {
+    top: 15%;
+    left: 77%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="122"] {
+    top: 97%;
+    left: 94%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="123"] {
+    top: 24%;
+    left: 40%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="124"] {
+    top: 58%;
+    left: 84%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="125"] {
+    top: 59%;
+    left: 27%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="126"] {
+    top: 83%;
+    left: 9%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="127"] {
+    top: 96%;
+    left: 30%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="128"] {
+    top: 68%;
+    left: 14%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="129"] {
+    top: 67%;
+    left: 99%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="130"] {
+    top: 96%;
+    left: 59%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="131"] {
+    top: 57%;
+    left: 90%;
+    opacity: 1;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="132"] {
+    top: 36%;
+    left: 53%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="133"] {
+    top: 91%;
+    left: 43%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="134"] {
+    top: 99%;
+    left: 52%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="135"] {
+    top: 25%;
+    left: 66%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="136"] {
+    top: 93%;
+    left: 97%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="137"] {
+    top: 96%;
+    left: 64%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="138"] {
+    top: 19%;
+    left: 41%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="139"] {
+    top: 42%;
+    left: 87%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="140"] {
+    top: 55%;
+    left: 10%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="141"] {
+    top: 62%;
+    left: 65%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="142"] {
+    top: 93%;
+    left: 81%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="143"] {
+    top: 50%;
+    left: 1%;
+    opacity: 0.7;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="144"] {
+    top: 43%;
+    left: 22%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="145"] {
+    top: 32%;
+    left: 8%;
+    opacity: 0.5;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="146"] {
+    top: 99%;
+    left: 30%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="147"] {
+    top: 30%;
+    left: 94%;
+    opacity: 1;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="148"] {
+    top: 32%;
+    left: 72%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="149"] {
+    top: 28%;
+    left: 67%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="150"] {
+    top: 20%;
+    left: 33%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="151"] {
+    top: 8%;
+    left: 66%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="152"] {
+    top: 32%;
+    left: 93%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="153"] {
+    top: 79%;
+    left: 60%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="154"] {
+    top: 41%;
+    left: 4%;
+    opacity: 1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="155"] {
+    top: 56%;
+    left: 79%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="156"] {
+    top: 78%;
+    left: 56%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="157"] {
+    top: 85%;
+    left: 96%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="158"] {
+    top: 96%;
+    left: 32%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="159"] {
+    top: 65%;
+    left: 92%;
+    opacity: 1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="160"] {
+    top: 15%;
+    left: 61%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="161"] {
+    top: 40%;
+    left: 18%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="162"] {
+    top: 73%;
+    left: 39%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="163"] {
+    top: 39%;
+    left: 43%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="164"] {
+    top: 17%;
+    left: 52%;
+    opacity: 0.7;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="165"] {
+    top: 71%;
+    left: 59%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="166"] {
+    top: 34%;
+    left: 54%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="167"] {
+    top: 9%;
+    left: 43%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="168"] {
+    top: 18%;
+    left: 3%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="169"] {
+    top: 37%;
+    left: 30%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="170"] {
+    top: 12%;
+    left: 33%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="171"] {
+    top: 97%;
+    left: 95%;
+    opacity: 0.7;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="172"] {
+    top: 19%;
+    left: 77%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="173"] {
+    top: 15%;
+    left: 68%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="174"] {
+    top: 70%;
+    left: 50%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="175"] {
+    top: 23%;
+    left: 2%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="176"] {
+    top: 31%;
+    left: 51%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="177"] {
+    top: 35%;
+    left: 82%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="178"] {
+    top: 47%;
+    left: 82%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="179"] {
+    top: 55%;
+    left: 76%;
+    opacity: 1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="180"] {
+    top: 43%;
+    left: 76%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="181"] {
+    top: 86%;
+    left: 15%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="182"] {
+    top: 90%;
+    left: 64%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="183"] {
+    top: 36%;
+    left: 94%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="184"] {
+    top: 38%;
+    left: 38%;
+    opacity: 1;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="185"] {
+    top: 63%;
+    left: 19%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="186"] {
+    top: 13%;
+    left: 85%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="187"] {
+    top: 64%;
+    left: 50%;
+    opacity: 1;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="188"] {
+    top: 24%;
+    left: 30%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="189"] {
+    top: 74%;
+    left: 41%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="190"] {
+    top: 22%;
+    left: 93%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="191"] {
+    top: 90%;
+    left: 74%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="192"] {
+    top: 42%;
+    left: 26%;
+    opacity: 0.2;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="193"] {
+    top: 67%;
+    left: 34%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="194"] {
+    top: 46%;
+    left: 65%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="195"] {
+    top: 14%;
+    left: 64%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="196"] {
+    top: 35%;
+    left: 88%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="197"] {
+    top: 30%;
+    left: 14%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="198"] {
+    top: 67%;
+    left: 2%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="199"] {
+    top: 3%;
+    left: 38%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="200"] {
+    top: 19%;
+    left: 34%;
+    opacity: 1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="201"] {
+    top: 11%;
+    left: 18%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="202"] {
+    top: 24%;
+    left: 82%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="203"] {
+    top: 48%;
+    left: 88%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="204"] {
+    top: 20%;
+    left: 82%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="205"] {
+    top: 7%;
+    left: 59%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="206"] {
+    top: 97%;
+    left: 54%;
+    opacity: 0.6;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="207"] {
+    top: 36%;
+    left: 78%;
+    opacity: 0.3;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="208"] {
+    top: 97%;
+    left: 56%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="209"] {
+    top: 99%;
+    left: 19%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="210"] {
+    top: 5%;
+    left: 32%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="211"] {
+    top: 76%;
+    left: 11%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="212"] {
+    top: 59%;
+    left: 11%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="213"] {
+    top: 74%;
+    left: 48%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="214"] {
+    top: 93%;
+    left: 60%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="215"] {
+    top: 91%;
+    left: 24%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="216"] {
+    top: 89%;
+    left: 4%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="217"] {
+    top: 29%;
+    left: 41%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="218"] {
+    top: 60%;
+    left: 77%;
+    opacity: 1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="219"] {
+    top: 88%;
+    left: 44%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="220"] {
+    top: 24%;
+    left: 7%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="221"] {
+    top: 21%;
+    left: 81%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="222"] {
+    top: 16%;
+    left: 8%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="223"] {
+    top: 71%;
+    left: 46%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="224"] {
+    top: 24%;
+    left: 45%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="225"] {
+    top: 12%;
+    left: 88%;
+    opacity: 1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="226"] {
+    top: 83%;
+    left: 37%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="227"] {
+    top: 8%;
+    left: 71%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="228"] {
+    top: 49%;
+    left: 34%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="229"] {
+    top: 57%;
+    left: 43%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="230"] {
+    top: 54%;
+    left: 21%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="231"] {
+    top: 6%;
+    left: 86%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="232"] {
+    top: 15%;
+    left: 71%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="233"] {
+    top: 16%;
+    left: 72%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="234"] {
+    top: 50%;
+    left: 23%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="235"] {
+    top: 83%;
+    left: 19%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="236"] {
+    top: 3%;
+    left: 55%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="237"] {
+    top: 29%;
+    left: 49%;
+    opacity: 0.9;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="238"] {
+    top: 12%;
+    left: 60%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="239"] {
+    top: 74%;
+    left: 12%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="240"] {
+    top: 26%;
+    left: 48%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="241"] {
+    top: 57%;
+    left: 51%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="242"] {
+    top: 30%;
+    left: 99%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="243"] {
+    top: 68%;
+    left: 36%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="244"] {
+    top: 78%;
+    left: 1%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="245"] {
+    top: 24%;
+    left: 26%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="246"] {
+    top: 21%;
+    left: 20%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="247"] {
+    top: 98%;
+    left: 68%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="248"] {
+    top: 59%;
+    left: 86%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="249"] {
+    top: 92%;
+    left: 79%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="250"] {
+    top: 49%;
+    left: 99%;
+    opacity: 1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="251"] {
+    top: 70%;
+    left: 39%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="252"] {
+    top: 88%;
+    left: 82%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="253"] {
+    top: 86%;
+    left: 24%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="254"] {
+    top: 26%;
+    left: 59%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="255"] {
+    top: 32%;
+    left: 60%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="256"] {
+    top: 77%;
+    left: 94%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="257"] {
+    top: 60%;
+    left: 66%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="258"] {
+    top: 57%;
+    left: 36%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="259"] {
+    top: 30%;
+    left: 20%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="260"] {
+    top: 71%;
+    left: 40%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="261"] {
+    top: 100%;
+    left: 40%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="262"] {
+    top: 40%;
+    left: 19%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="263"] {
+    top: 44%;
+    left: 85%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="264"] {
+    top: 56%;
+    left: 64%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="265"] {
+    top: 97%;
+    left: 23%;
+    opacity: 1;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="266"] {
+    top: 83%;
+    left: 37%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="267"] {
+    top: 84%;
+    left: 100%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="268"] {
+    top: 84%;
+    left: 49%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="269"] {
+    top: 70%;
+    left: 98%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="270"] {
+    top: 13%;
+    left: 57%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="271"] {
+    top: 46%;
+    left: 3%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="272"] {
+    top: 39%;
+    left: 2%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="273"] {
+    top: 18%;
+    left: 47%;
+    opacity: 1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="274"] {
+    top: 60%;
+    left: 55%;
+    opacity: 1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="275"] {
+    top: 67%;
+    left: 42%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="276"] {
+    top: 26%;
+    left: 73%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="277"] {
+    top: 58%;
+    left: 9%;
+    opacity: 1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="278"] {
+    top: 66%;
+    left: 75%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="279"] {
+    top: 68%;
+    left: 36%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="280"] {
+    top: 80%;
+    left: 87%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="281"] {
+    top: 79%;
+    left: 39%;
+    opacity: 1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="282"] {
+    top: 67%;
+    left: 86%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="283"] {
+    top: 9%;
+    left: 16%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="284"] {
+    top: 6%;
+    left: 25%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="285"] {
+    top: 94%;
+    left: 41%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="286"] {
+    top: 93%;
+    left: 60%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="287"] {
+    top: 82%;
+    left: 99%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="288"] {
+    top: 95%;
+    left: 70%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="289"] {
+    top: 26%;
+    left: 13%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="290"] {
+    top: 70%;
+    left: 30%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="291"] {
+    top: 29%;
+    left: 4%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="292"] {
+    top: 100%;
+    left: 34%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="293"] {
+    top: 24%;
+    left: 36%;
+    opacity: 1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="294"] {
+    top: 100%;
+    left: 30%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="295"] {
+    top: 93%;
+    left: 85%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="296"] {
+    top: 77%;
+    left: 30%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="297"] {
+    top: 69%;
+    left: 2%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="298"] {
+    top: 80%;
+    left: 82%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="299"] {
+    top: 52%;
+    left: 45%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="300"] {
+    top: 71%;
+    left: 27%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="301"] {
+    top: 45%;
+    left: 85%;
+    opacity: 1;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="302"] {
+    top: 16%;
+    left: 61%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="303"] {
+    top: 25%;
+    left: 53%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="304"] {
+    top: 39%;
+    left: 2%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="305"] {
+    top: 89%;
+    left: 9%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="306"] {
+    top: 45%;
+    left: 24%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="307"] {
+    top: 92%;
+    left: 88%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="308"] {
+    top: 39%;
+    left: 58%;
+    opacity: 0.1;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="309"] {
+    top: 7%;
+    left: 59%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="310"] {
+    top: 7%;
+    left: 73%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="311"] {
+    top: 89%;
+    left: 73%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="312"] {
+    top: 86%;
+    left: 58%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="313"] {
+    top: 43%;
+    left: 54%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="314"] {
+    top: 70%;
+    left: 75%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="315"] {
+    top: 87%;
+    left: 36%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="316"] {
+    top: 97%;
+    left: 10%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="317"] {
+    top: 17%;
+    left: 86%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="318"] {
+    top: 40%;
+    left: 95%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="319"] {
+    top: 79%;
+    left: 66%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="320"] {
+    top: 7%;
+    left: 55%;
+    opacity: 0.7;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="321"] {
+    top: 88%;
+    left: 32%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="322"] {
+    top: 71%;
+    left: 26%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="323"] {
+    top: 6%;
+    left: 87%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="324"] {
+    top: 14%;
+    left: 83%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="325"] {
+    top: 85%;
+    left: 64%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="326"] {
+    top: 31%;
+    left: 35%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="327"] {
+    top: 83%;
+    left: 7%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="328"] {
+    top: 20%;
+    left: 53%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="329"] {
+    top: 87%;
+    left: 55%;
+    opacity: 0.6;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="330"] {
+    top: 34%;
+    left: 71%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="331"] {
+    top: 65%;
+    left: 82%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="332"] {
+    top: 8%;
+    left: 73%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="333"] {
+    top: 51%;
+    left: 55%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="334"] {
+    top: 31%;
+    left: 59%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="335"] {
+    top: 21%;
+    left: 88%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="336"] {
+    top: 26%;
+    left: 45%;
+    opacity: 1;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="337"] {
+    top: 84%;
+    left: 17%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="338"] {
+    top: 78%;
+    left: 39%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="339"] {
+    top: 57%;
+    left: 37%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="340"] {
+    top: 71%;
+    left: 2%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="341"] {
+    top: 71%;
+    left: 40%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="342"] {
+    top: 16%;
+    left: 13%;
+    opacity: 0.7;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="343"] {
+    top: 76%;
+    left: 85%;
+    opacity: 1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="344"] {
+    top: 94%;
+    left: 20%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="345"] {
+    top: 65%;
+    left: 94%;
+    opacity: 1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="346"] {
+    top: 42%;
+    left: 93%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="347"] {
+    top: 2%;
+    left: 21%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="348"] {
+    top: 73%;
+    left: 35%;
+    opacity: 0.6;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="349"] {
+    top: 80%;
+    left: 36%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="350"] {
+    top: 16%;
+    left: 56%;
+    opacity: 1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="351"] {
+    top: 70%;
+    left: 99%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="352"] {
+    top: 26%;
+    left: 66%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="353"] {
+    top: 84%;
+    left: 81%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="354"] {
+    top: 17%;
+    left: 87%;
+    opacity: 1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="355"] {
+    top: 10%;
+    left: 24%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="356"] {
+    top: 69%;
+    left: 31%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="357"] {
+    top: 22%;
+    left: 97%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="358"] {
+    top: 39%;
+    left: 69%;
+    opacity: 1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="359"] {
+    top: 37%;
+    left: 20%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="360"] {
+    top: 24%;
+    left: 27%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="361"] {
+    top: 37%;
+    left: 31%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="362"] {
+    top: 2%;
+    left: 98%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="363"] {
+    top: 54%;
+    left: 54%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="364"] {
+    top: 65%;
+    left: 71%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="365"] {
+    top: 73%;
+    left: 37%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="366"] {
+    top: 18%;
+    left: 11%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="367"] {
+    top: 36%;
+    left: 6%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="368"] {
+    top: 34%;
+    left: 19%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="369"] {
+    top: 87%;
+    left: 57%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="370"] {
+    top: 55%;
+    left: 27%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="371"] {
+    top: 34%;
+    left: 84%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="372"] {
+    top: 100%;
+    left: 66%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="373"] {
+    top: 94%;
+    left: 36%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="374"] {
+    top: 5%;
+    left: 91%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="375"] {
+    top: 22%;
+    left: 27%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="376"] {
+    top: 29%;
+    left: 19%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="377"] {
+    top: 48%;
+    left: 14%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="378"] {
+    top: 48%;
+    left: 82%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="379"] {
+    top: 79%;
+    left: 41%;
+    opacity: 1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="380"] {
+    top: 54%;
+    left: 18%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="381"] {
+    top: 98%;
+    left: 85%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="382"] {
+    top: 91%;
+    left: 95%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="383"] {
+    top: 68%;
+    left: 81%;
+    opacity: 1;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="384"] {
+    top: 99%;
+    left: 72%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="385"] {
+    top: 34%;
+    left: 79%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="386"] {
+    top: 24%;
+    left: 84%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="387"] {
+    top: 56%;
+    left: 64%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="388"] {
+    top: 34%;
+    left: 37%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="389"] {
+    top: 90%;
+    left: 33%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="390"] {
+    top: 12%;
+    left: 80%;
+    opacity: 1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="391"] {
+    top: 22%;
+    left: 37%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="392"] {
+    top: 81%;
+    left: 37%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="393"] {
+    top: 5%;
+    left: 45%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="394"] {
+    top: 14%;
+    left: 94%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="395"] {
+    top: 6%;
+    left: 66%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="396"] {
+    top: 23%;
+    left: 81%;
+    opacity: 0.4;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="397"] {
+    top: 34%;
+    left: 81%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="398"] {
+    top: 30%;
+    left: 28%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="399"] {
+    top: 53%;
+    left: 24%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="400"] {
+    top: 21%;
+    left: 53%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="401"] {
+    top: 33%;
+    left: 53%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="402"] {
+    top: 49%;
+    left: 9%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="403"] {
+    top: 1%;
+    left: 87%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="404"] {
+    top: 9%;
+    left: 25%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="405"] {
+    top: 75%;
+    left: 77%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="406"] {
+    top: 100%;
+    left: 16%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="407"] {
+    top: 64%;
+    left: 58%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="408"] {
+    top: 5%;
+    left: 9%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="409"] {
+    top: 47%;
+    left: 16%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="410"] {
+    top: 84%;
+    left: 79%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="411"] {
+    top: 10%;
+    left: 99%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="412"] {
+    top: 48%;
+    left: 22%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="413"] {
+    top: 60%;
+    left: 53%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="414"] {
+    top: 8%;
+    left: 61%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="415"] {
+    top: 23%;
+    left: 29%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="416"] {
+    top: 71%;
+    left: 97%;
+    opacity: 0.9;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="417"] {
+    top: 44%;
+    left: 2%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="418"] {
+    top: 47%;
+    left: 42%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="419"] {
+    top: 33%;
+    left: 84%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="420"] {
+    top: 57%;
+    left: 48%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="421"] {
+    top: 60%;
+    left: 6%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="422"] {
+    top: 95%;
+    left: 35%;
+    opacity: 0.6;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="423"] {
+    top: 11%;
+    left: 89%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="424"] {
+    top: 11%;
+    left: 26%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="425"] {
+    top: 39%;
+    left: 49%;
+    opacity: 0.6;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="426"] {
+    top: 43%;
+    left: 22%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="427"] {
+    top: 73%;
+    left: 5%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="428"] {
+    top: 10%;
+    left: 51%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="429"] {
+    top: 31%;
+    left: 21%;
+    opacity: 1;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="430"] {
+    top: 98%;
+    left: 35%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="431"] {
+    top: 8%;
+    left: 96%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+  }
+  div.night .star[data-star="432"] {
+    top: 73%;
+    left: 99%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="433"] {
+    top: 15%;
+    left: 40%;
+    opacity: 0.2;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="434"] {
+    top: 11%;
+    left: 79%;
+    opacity: 1;
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+  }
+  div.night .star[data-star="435"] {
+    top: 37%;
+    left: 44%;
+    opacity: 0.6;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="436"] {
+    top: 31%;
+    left: 56%;
+    opacity: 0.5;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="437"] {
+    top: 57%;
+    left: 25%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="438"] {
+    top: 1%;
+    left: 66%;
+    opacity: 0.7;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="439"] {
+    top: 83%;
+    left: 94%;
+    opacity: 0.8;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="440"] {
+    top: 3%;
+    left: 69%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="441"] {
+    top: 74%;
+    left: 52%;
+    opacity: 0.4;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  div.night .star[data-star="442"] {
+    top: 78%;
+    left: 23%;
+    opacity: 0.5;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="443"] {
+    top: 31%;
+    left: 94%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+  }
+  div.night .star[data-star="444"] {
+    top: 52%;
+    left: 100%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  div.night .star[data-star="445"] {
+    top: 5%;
+    left: 50%;
+    opacity: 0.7;
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+  }
+  div.night .star[data-star="446"] {
+    top: 40%;
+    left: 2%;
+    opacity: 0.9;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  div.night .star[data-star="447"] {
+    top: 41%;
+    left: 99%;
+    opacity: 0.3;
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+  }
+  div.night .star[data-star="448"] {
+    top: 22%;
+    left: 50%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  div.night .star[data-star="449"] {
+    top: 68%;
+    left: 7%;
+    opacity: 0.8;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+  }
+  div.night .star[data-star="450"] {
+    top: 86%;
+    left: 24%;
+    opacity: 0.1;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }

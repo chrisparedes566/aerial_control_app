@@ -20,11 +20,22 @@ const wyze = new Wyze(options, logger)
     //console.log(devices)
 
     // Get a Wyze Bulb by name and turn it off.
-    device = await wyze.getDeviceByName('Gameroom')
-    state = await wyze.getDeviceState(device)
-    //result = await wyze.plugTurnOff(device.mac, device.product_model)
-    //console.log(state)
-    console.log(`${device.nickname} is ` + state + `.`)
+    device = await wyze.getDeviceByName('LED Light Switch')
+    state = device.device_params.switch_state
+
+    if(state === 1){
+        await wyze.plugTurnOff(device.mac, device.product_model)
+    } else {
+        await wyze.plugTurnOn(device.mac, device.product_model)
+    }
+
+    updatedDevice = await wyze.getDeviceByName('LED Light Switch')
+    
+    console.log(updatedDevice)
+
+    return updatedDevice
+
+    //console.log(`${device.nickname} is ` + state + `.`)
 
     // Get the state of a Wyze Sense contact sensor
     //device = await wyze.getDeviceByName('Front Door')
