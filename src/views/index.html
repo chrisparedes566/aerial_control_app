@@ -6,11 +6,49 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="/css/switch.css" />
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+		<script>
+			var plugStatus = 0;
+			$(document).ready(function(){
+				$.ajax({
+					type: 'POST',
+					url: "/get-status",
+					dataType: 'json',
+					success: function(result) {
+						plugStatus = result;
+					}
+				}).then(function(){
+					if (plugStatus === 0) {
+						$('body').removeClass().addClass('night');
+						$( '#time' ).attr( 'checked', false );
+						$('.loading-wrapper').fadeOut();
+					} else {
+						$('body').removeClass().addClass('day');
+						$( '#time' ).attr( 'checked', true );
+						setTimeout(function(){
+							$('.loading-wrapper').fadeOut();
+						},1000)
+					}
+				})
+			});
+		</script>
 	</head>
 	<body class="night">
-		<div class="checkbox" onclick="toggleSwitch()">
+		<div class="loading-wrapper">
+			<div class="loading">
+				<p>Loading...</p>
+				<span><i></i><i></i></span>
+			</div>
+		</div>
+		<div class="checkbox">
+			<div class="header-wrapper">
+				<h1 class="main-header">Neon Light Switch</h1>
+				<p>Turn on/off the backyard neon lights.</p>
+			</div>
 			<input type="checkbox" id="time"/>
-			<label for="time"></label>
+			<label for="time" onclick="toggleSwitch()"></label>
 		</div>
 		<section class="stages">
 			<div class="night">

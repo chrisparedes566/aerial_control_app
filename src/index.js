@@ -29,6 +29,21 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+app.post('/get-status', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('LED Light Switch')
+  state = device.device_params.switch_state
+
+  res.send( JSON.stringify(state) )
+
+  })()
+})
+
 app.post('/smart-plug', (req, res) => {
     const wyze = new Wyze(options, logger)
 
