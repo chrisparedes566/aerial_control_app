@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "consolidate": "^1.0.3",
+    "express": "^4.19.2",
+    "pug": "^3.0.3",
+    "swig": "^1.4.2",
     "wyze-api": "^1.1.7"
   }
 }
