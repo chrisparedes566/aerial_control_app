@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "wyze-api": "^1.1.7"
+  }
+}

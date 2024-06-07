@@ -11,6 +11,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+	var doSomething;
+    $(document).ready(function() { // this waits until the document is fully loaded
+		// Put custom logic here    
+		doSomething = function doSomething(){
+			$.ajax({
+				type: 'POST',
+				url: "./example/smart-plug.js",
+				success: function(resultData) { console.log(resultData) }
+			});
+		}
+	});
+</script>
 	</head>
 	<body class="is-preload">
 		<div id="wrapper">
@@ -20,7 +34,7 @@
 
 				<!-- Header -->
 					<header id="header">
-						<h1>Adam Jensen</h1>
+						<h1>Aerial Control</h1>
 						<p>Security Chief &nbsp;&bull;&nbsp; Cyborg &nbsp;&bull;&nbsp; Never asked for this</p>
 						<nav>
 							<ul>
@@ -31,6 +45,8 @@
 								<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
 							</ul>
 						</nav>
+
+						<button class="btn" onclick="doSomething()">ON/OFF</button>
 					</header>
 
 				<!-- Footer -->
