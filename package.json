@@ -5,5 +5,8 @@
     "pug": "^3.0.3",
     "swig": "^1.4.2",
     "wyze-api": "^1.1.7"
+  },
+  "scripts": {
+    "start": "node ./src/index.js"
   }
 }
