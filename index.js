@@ -25,7 +25,7 @@ const options = {
   logLevel: "none"
 }
 
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
     res.render('index')
 })
 
