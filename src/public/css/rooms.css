@@ -1,12 +1,14 @@
 html, body {
-    margin:0
-}
+    height: 100%;
+    overflow: scroll;
+    margin: 0;
+  }
 
 * {
     box-sizing: border-box;
     font-family: Nunito Sans;
     font-weight: 100;
-    color: #1385ca;
+    color: #1385ca !important;
 }
 
 .container{
