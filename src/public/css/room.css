@@ -114,18 +114,18 @@ header {
 }
 
 .overlay.landscapeOnPoolOff {
-    background: url(http://localhost:4000/css/images/IMG_0499%203.jpg);
+    background: url(/css/images/IMG_0499%203.jpg);
 }
 
 .overlay.landscapeOffPoolOn {
-    background: url(http://localhost:4000/css/images/IMG_0499_4.jpg);
+    background: url(/css/images/IMG_0499_4.jpg);
     background-size: cover;
     opacity: 0.5;
     mix-blend-mode: darken;
 }
 
 .overlay.landscapeOnPoolOff {
-    background: url(http://localhost:4000/css/images/IMG_0499_3.jpg);
+    background: url(/css/images/IMG_0499_3.jpg);
     background-size: cover;
     opacity: 0.7;
     mix-blend-mode: luminosity;
