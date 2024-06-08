@@ -1,0 +1,92 @@
+html, body {
+    margin:0
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Nunito Sans;
+    font-weight: 100;
+    color: #1385ca;
+}
+
+.container{
+    padding: 75px 0;
+    margin: 0 auto;
+  }
+
+  .header-wrapper {
+    margin-bottom: 26px;
+}
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+  
+  .gallery-wrap {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70vh;
+  }
+
+  .item a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+  
+  .item {
+    flex: 1;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: none;
+    transition: flex 0.8s ease;
+    
+    &:hover{
+      flex: 7;
+    }
+  }
+  
+  .item-1 { 
+    background-image: url('https://a0.muscache.com/im/pictures/f0f01186-ccfd-4653-a9cf-ed22c8a45cf0.jpg?im_w=1200');
+  }
+  
+  .item-2 { 
+    background-image: url('https://a0.muscache.com/im/pictures/miso/Hosting-49964761/original/423f32e6-facc-495e-8cbc-463713f60512.jpeg?im_w=1440');
+  }
+  
+  .item-3 { 
+    background-image: url('https://a0.muscache.com/im/pictures/airflow/Hosting-49964761/original/443acd86-5a77-4845-a069-777e55ee46f4.jpg?im_w=1440');
+  }
+  
+  .item-4 { 
+    background-image: url('https://a0.muscache.com/im/pictures/airflow/Hosting-49964761/original/a23ea32d-7298-44f4-9fcd-3c64d05bda9a.jpg?im_w=1440');
+  }
+  
+  .item-5 { 
+    background-image: url('https://a0.muscache.com/im/pictures/miso/Hosting-49964761/original/49900456-dc07-4439-875a-dc3a32a05091.jpeg?im_w=1440');
+  }
+
+
+  @media screen and (max-width: 500px) {
+    .gallery-wrap {
+        display: block;
+        width: 100%;
+        height: 30vh;
+        min-height: 260px;
+    }
+
+    .item {
+        flex: 1;
+        height: 100%;
+        background-position: center;
+        background-size: cover;
+        transition: flex 0.8s ease;
+        margin: 16px;
+    }
+}

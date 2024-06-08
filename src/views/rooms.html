@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Aerial - Rooms</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="/css/rooms.css" />
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+		<script>
+			$(document).ready(function(){
+				
+			});
+		</script>
+	</head>
+	<body>
+        <header>
+            <div class="left-menu">+</div>
+            <div class="logo"><a href="/rooms">aerial</a></div>
+            <div class="right-menu">contact</div>
+        </header>
+        <div class="container">
+            <div class="header-wrapper">
+                <h1 class="main-header">Royal Rooms</h1>
+                <p>Select room to control smart devices.</p>
+            </div>
+          
+            <div class="gallery-wrap">
+                <div class="item item-1"><a href="/controller"></a></div>
+                <div class="item item-2"><a href="/controller"></a></div>
+                <div class="item item-3"><a href="/controller"></a></div>
+                <div class="item item-4"><a href="/controller"></a></div>
+                <div class="item item-5"><a href="/controller"></a></div>
+            </div>
+        </div>
+
+		<script>
+			window.onload = function() { document.body.classList.remove('is-preload'); }
+			window.ontouchmove = function() { return false; }
+			window.onorientationchange = function() { document.body.scrollTop = 0; }
+
+			function toggleSwitch(){
+				$.ajax({
+					type: 'POST',
+					url: "/smart-plug",
+					success: function(resultData) { console.log(resultData) }
+				});
+			}
+
+			$(document).ready(function(){
+				
+			})
+		</script>
+	</body>
+</html>

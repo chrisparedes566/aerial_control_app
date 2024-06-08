@@ -29,6 +29,14 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+app.get('/rooms', (req, res) => {
+  res.render('rooms')
+})
+
+app.get('/controller', (req, res) => {
+  res.render('controller')
+})
+
 app.post('/get-status', (req, res) => {
   const wyze = new Wyze(options, logger)
 
