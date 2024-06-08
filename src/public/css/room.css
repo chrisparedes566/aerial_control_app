@@ -100,7 +100,7 @@ header {
     width: 100%;
     background-image: url(https://a0.muscache.com/im/pictures/miso/Hosting-49964761/original/1b25b64f-f5d6-41ee-bd91-99a005bea929.jpeg?im_w=1440);
     height: 286px;
-    background-size: 110%;
+    background-size: cover;
     background-repeat: no-repeat;
     z-index: 1;
 }
@@ -111,10 +111,6 @@ header {
     background-size: cover;
     opacity: 0.8;
     position: absolute;
-}
-
-.overlay.landscapeOnPoolOff {
-    background: url(/css/images/IMG_0499%203.jpg);
 }
 
 .overlay.landscapeOffPoolOn {
