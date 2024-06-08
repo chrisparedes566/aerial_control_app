@@ -82,11 +82,12 @@ html, body {
     }
 
     .item {
-        flex: 1;
         height: 100%;
         background-position: center;
         background-size: cover;
         transition: flex 0.8s ease;
         margin: 16px;
+        border-radius: 6px;
+        box-shadow: 0 8px 14px -12px #000;
     }
 }

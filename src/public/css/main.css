@@ -1,3 +1,9 @@
+html, body {
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+  }
+
 header {
 	background: #9090901f;
     width: 100%;
@@ -8,6 +14,7 @@ header {
     align-items: center;
     padding: 6px 12px;
     backdrop-filter: blur(16px);
+	z-index: 1000;
 }
 
 .logo {
@@ -27,12 +34,17 @@ header {
 
 .logo a {
     text-decoration: none;
+    color: #fff;
 }
 
-.left-menu {
+.left-menu, .right-menu {
     width: 30px;
     height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.right-menu {
+	font-size: 20px;
 }
