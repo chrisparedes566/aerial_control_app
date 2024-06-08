@@ -105,6 +105,36 @@ header {
     z-index: 1;
 }
 
+.overlay {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    opacity: 0.8;
+    position: absolute;
+}
+
+.overlay.landscapeOnPoolOff {
+    background: url(http://localhost:4000/css/images/IMG_0499%203.jpg);
+}
+
+.overlay.landscapeOffPoolOn {
+    background: url(http://localhost:4000/css/images/IMG_0499_4.jpg);
+    background-size: cover;
+    opacity: 0.5;
+    mix-blend-mode: darken;
+}
+
+.overlay.landscapeOnPoolOff {
+    background: url(http://localhost:4000/css/images/IMG_0499_3.jpg);
+    background-size: cover;
+    opacity: 0.7;
+    mix-blend-mode: luminosity;
+}
+
+.image.light1on.light2on .overlay, .image.light1on .overlay2, .image.light2on .overlay1  {
+    display: none;
+}
+
 div#pool-light {
     position: absolute;
     width: 16px;
@@ -145,6 +175,16 @@ div#landscape-light {
     align-items: end;
 }
 
+div#pool-bubble {
+    top: 80px;
+    left: -180px;
+}
+
+div#landscape-bubble {
+    left: -32px;
+    top: -360px;
+}
+
 div#landscape-light:before {
     content: '';
     height: 300px;
@@ -160,8 +200,6 @@ div#landscape-light:before {
     width: 200px;
     height: 100px;
     position: absolute;
-    left: -32px;
-    top: -360px;
     border-radius: 10px;
     box-shadow: 0px 4px 12px -2px #ffffffad;
     border: 1px solid #fff;
@@ -267,5 +305,40 @@ div#landscape-light:before {
   #button-1 .knobs,
   #button-1 .knobs:before,
   #button-1 .layer {
+    transition: 0.3s ease all;
+  }
+
+  /* Button 2 */
+#button-2 .knobs:before {
+    content: 'OFF';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 4px;
+    color: #fff;
+    font-size: 7px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 0.7;
+    padding: 9px 4px;
+    background-color: #b8b8b8;
+    border-radius: 50%;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+}
+  
+#button-2 .checkbox:checked + .knobs:before {
+    content: "ON";
+    left: 30px;
+    background-color: #0dae0e;
+}
+  
+  #button-2 .checkbox:checked ~ .layer {
+    background-color: #ebfcf3;
+  }
+  
+  #button-2 .knobs,
+  #button-2 .knobs:before,
+  #button-2 .layer {
     transition: 0.3s ease all;
   }

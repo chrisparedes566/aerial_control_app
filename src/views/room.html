@@ -12,15 +12,35 @@
 		<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script>
+            var plugStatus = '';
             function toggleSwitch(){
 				$.ajax({
 					type: 'POST',
 					url: "/smart-plug",
-					success: function(resultData) { console.log(resultData) }
-				});
+					success: function(resultData) {
+                        console.log(resultData)
+                    }
+				}).done(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/get-status",
+                        dataType: 'json',
+                        success: function(result) {
+                            plugStatus = result;
+                        }
+                    }).then(function(){
+                        if(plugStatus === 1){
+                            $('.image').removeClass('light1on');
+                            console.log('case 1')
+                        } else if(plugStatus === 0) {
+                            $('.image').addClass('light1on');
+                            console.log('case 2')
+
+                        }
+                    });
+                });
 			}
 
-			var plugStatus = 0;
 			$(document).ready(function(){
 				$.ajax({
 					type: 'POST',
@@ -32,9 +52,11 @@
 				}).then(function(){
 					if (plugStatus === 0) {
                         $('#button-1 .checkbox').attr('checked', false);
+                        $('.image').removeClass('light1on');
 						$('.loading-wrapper').fadeOut();
 					} else {
                         $('#button-1 .checkbox').attr('checked', true);
+                        $('.image').addClass('light1on');
 						setTimeout(function(){
 							$('.loading-wrapper').fadeOut();
 						},1000)
@@ -71,13 +93,25 @@
 		</div>
 
         <div class="image">
-            <div id="pool-light" class="point"></div>
+            <div class="overlay overlay1 landscapeOnPoolOff"></div>
+            <div class="overlay overlay2 landscapeOffPoolOn"></div>
+            <div id="pool-light" class="point">
+                <div class="bubble" id="pool-bubble">
+                    <h2>Pool lights</h2>
+                    <p>Turn on/off pool lights</p>
+                    <div class="button r" id="button-2" onclick="$('.image').toggleClass('light2on')">
+                        <input type="checkbox" class="checkbox">
+                        <div class="knobs"></div>
+                        <div class="layer"></div>
+                    </div>
+                </div>
+            </div>
             <div id="landscape-light" class="point">
                 <div class="bubble" id="landscape-bubble">
                     <h2>Landscape lights</h2>
                     <p>Turn on/off landscape lights</p>
                     <div class="button r" id="button-1" onclick="toggleSwitch()">
-                        <input type="checkbox" class="checkbox" />
+                        <input type="checkbox" class="checkbox">
                         <div class="knobs"></div>
                         <div class="layer"></div>
                     </div>
