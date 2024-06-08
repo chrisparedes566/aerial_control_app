@@ -2,7 +2,12 @@ body {
     background-image: url(https://a0.muscache.com/im/pictures/miso/Hosting-49964761/original/1b25b64f-f5d6-41ee-bd91-99a005bea929.jpeg?im_w=1440);
     background-size: cover;
     backdrop-filter: blur(23px);
+    -webkit-backdrop-filter: blur(23px);
     background-position: 77%;
+}
+
+h1,h2,h3,p,a,span,input {
+    font-family: Nunito sans;
 }
 
 header {
@@ -97,6 +102,7 @@ header {
     height: 286px;
     background-size: 110%;
     background-repeat: no-repeat;
+    z-index: 1;
 }
 
 div#pool-light {
