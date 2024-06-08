@@ -17,10 +17,10 @@ const Logger = require("@ptkdev/logger")
 const logger = new Logger()
 
 const options = {
-  username: /*process.env.username*/ 'chrisparedes566@gmail.com',
-  password: /*process.env.password*/ 'Chris6964549!',
-  keyId: /*process.env.keyId*/ '2bcdf977-35ea-4b5d-a639-0be04cd2bc11',
-  apiKey: /*process.env.apiKey*/ 'CJrF6G3jUhHIQzEwXRUtPTm5iUUldQiXf9CF5vORRJB9yBEgCkKJazdndAgy',
+  username: /*process.env.username*/ 'omniglobalenterprise@gmail.com',
+  password: /*process.env.password*/ 'Aerial123!',
+  keyId: /*process.env.keyId*/ '05f07a18-36bf-4088-8945-36595c60447b',
+  apiKey: /*process.env.apiKey*/ 'BMdu9FrzUjwRrgoGOZyeNUoX1CoWZisqs8Gl1uejnG3LhbubBIwKjYtJiave',
   persistPath: "./",
   logLevel: "none"
 }
@@ -48,7 +48,7 @@ app.post('/get-status', (req, res) => {
   let device, state, result
 
   // Get a Wyze Bulb by name and turn it off.
-  device = await wyze.getDeviceByName('LED Light Switch')
+  device = await wyze.getDeviceByName('Exterior Wall Lights')
   state = device.device_params.switch_state
 
   res.send( JSON.stringify(state) )
@@ -67,7 +67,7 @@ app.post('/smart-plug', (req, res) => {
     //console.log(devices)
 
     // Get a Wyze Bulb by name and turn it off.
-    device = await wyze.getDeviceByName('LED Light Switch')
+    device = await wyze.getDeviceByName('Exterior Wall Lights')
     state = device.device_params.switch_state
 
     if(state === 1){
@@ -76,7 +76,7 @@ app.post('/smart-plug', (req, res) => {
         await wyze.plugTurnOn(device.mac, device.product_model)
     }
 
-    updatedDevice = await wyze.getDeviceByName('LED Light Switch')
+    updatedDevice = await wyze.getDeviceByName('Exterior Wall Lights')
     
     console.log(updatedDevice)
 
@@ -90,6 +90,35 @@ app.post('/smart-plug', (req, res) => {
     //console.log(`${device.nickname} is ${state}`)
 
     })()
+})
+
+app.post('/smart-plug', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get all Wyze devices
+  //const devices = await wyze.getDeviceList()
+  //console.log(devices)
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('Exterior Wall Lights')
+  state = device.device_params.switch_state
+
+  if(state === 1){
+      await wyze.plugTurnOff(device.mac, device.product_model)
+  } else {
+      await wyze.plugTurnOn(device.mac, device.product_model)
+  }
+
+  updatedDevice = await wyze.getDeviceByName('Exterior Wall Lights')
+  
+  console.log(updatedDevice)
+
+  res.send( updatedDevice )
+
+  })()
 })
 
 app.listen(port, () => {
