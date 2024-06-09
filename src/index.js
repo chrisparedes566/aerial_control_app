@@ -41,6 +41,10 @@ app.get('/rooms/backyard', (req, res) => {
   res.render('room')
 })
 
+app.get('/rooms/exterior-wall', (req, res) => {
+  res.render('device-dashboard')
+})
+
 app.post('/get-status', (req, res) => {
   const wyze = new Wyze(options, logger)
 
@@ -55,6 +59,53 @@ app.post('/get-status', (req, res) => {
 
   })()
 })
+
+app.post('/get-neon-status', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('Exterior Wall Lights')
+  state = device.device_params.switch_state
+
+  res.send( JSON.stringify(state) )
+
+  })()
+})
+
+app.post('/get-landscape-status', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('Landscape Lights')
+  state = device.device_params.switch_state
+
+  res.send( JSON.stringify(state) )
+
+  })()
+})
+
+app.post('/get-string-status', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('String Lights')
+  state = device.device_params.switch_state
+
+  res.send( JSON.stringify(state) )
+
+  })()
+})
+
+
 
 app.post('/smart-plug', (req, res) => {
     const wyze = new Wyze(options, logger)
@@ -92,15 +143,11 @@ app.post('/smart-plug', (req, res) => {
     })()
 })
 
-app.post('/smart-plug', (req, res) => {
+app.post('/neon-light-switch', (req, res) => {
   const wyze = new Wyze(options, logger)
 
 ; (async () => {
   let device, state, result
-
-  // Get all Wyze devices
-  //const devices = await wyze.getDeviceList()
-  //console.log(devices)
 
   // Get a Wyze Bulb by name and turn it off.
   device = await wyze.getDeviceByName('Exterior Wall Lights')
@@ -113,6 +160,57 @@ app.post('/smart-plug', (req, res) => {
   }
 
   updatedDevice = await wyze.getDeviceByName('Exterior Wall Lights')
+  
+  console.log(updatedDevice)
+
+  res.send( updatedDevice )
+
+  })()
+})
+
+
+app.post('/landscape-light-switch', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('Landscape Lights')
+  state = device.device_params.switch_state
+
+  if(state === 1){
+      await wyze.plugTurnOff(device.mac, device.product_model)
+  } else {
+      await wyze.plugTurnOn(device.mac, device.product_model)
+  }
+
+  updatedDevice = await wyze.getDeviceByName('Landscape Lights')
+  
+  console.log(updatedDevice)
+
+  res.send( updatedDevice )
+
+  })()
+})
+
+app.post('/string-light-switch', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('String Lights')
+  state = device.device_params.switch_state
+
+  if(state === 1){
+      await wyze.plugTurnOff(device.mac, device.product_model)
+  } else {
+      await wyze.plugTurnOn(device.mac, device.product_model)
+  }
+
+  updatedDevice = await wyze.getDeviceByName('String Lights')
   
   console.log(updatedDevice)
 
