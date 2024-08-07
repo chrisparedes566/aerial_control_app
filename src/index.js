@@ -6,7 +6,7 @@ const path = require('path');
 const request = require('request');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-require('dotenv').config()
+require('dotenv-extended').config()
 
 var axios = require('axios');
 
