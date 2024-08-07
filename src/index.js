@@ -1,15 +1,12 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 4000;
-
+const port = process.env.PORT || process.env.DEV_PORT;
 const cons = require('consolidate');
 const path = require('path');
 const request = require('request');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-//const redis = require('redis');
-//var redisStore = require('connect-redis').default;
-//var client  = redis.createClient();
+require('dotenv').config()
 
 var axios = require('axios');
 
@@ -19,9 +16,9 @@ airbnb.testAuth('faketoken3sDdfvtF9if5398j0v5nui')
 let August = require('august-api');
 
 let august = new August({
-  installId: /*yaleID ||*/ "Chris6964549!", // Can be anything, but save it for future use on this account
-  augustId: /*yaleUsername || */ "chrisparedes566@gmail.com", // Phone must be formatted +[countrycode][number]
-  password: /*yalePassword ||*/ "Chris6964549!"
+  installId: process.env.YALE_ID, // Can be anything, but save it for future use on this account
+  augustId : process.env.YALE_USERNAME, // Phone must be formatted +[countrycode][number] or email format
+  password: process.env.YALE_PASSWORD
 })
 
 const wifi = require('node-wifi');
@@ -34,8 +31,8 @@ wifi.init({
 
 app.post('/connect-to-wifi', (req, res) => {
   // Connect to a network
-  wifi.connect({ ssid: '10018 House', password: 'AirBnB10018!' }, () => {
-    console.log('Connected'); 
+  wifi.connect({ ssid: process.env.WIFI_SSID, password: process.env.WIFI_PASSWORD }, () => {
+    console.log('Connected');
   });
 })
 
@@ -69,7 +66,7 @@ async function getGoogleApiCredentials(){
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Request-Headers': '*',
-            'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+            'api-key': process.env.MONGO_API_KEY,
             'Accept': 'application/ejson'
           },
           data: data
@@ -114,10 +111,10 @@ const Logger = require("@ptkdev/logger")
 const logger = new Logger()
 
 const options = {
-  username: /*process.env.username*/ 'omniglobalenterprise@gmail.com',
-  password: /*process.env.password*/ 'Aerial123!',
-  keyId: /*process.env.keyId*/ '9696ce95-d2fc-4444-a08f-004411b5cd5d',
-  apiKey: /*process.env.apiKey*/ 'qMIJKSwE2HdkWYVHQDLwBGYaknupNiphL8V2yTQbbuuxjDcwyWJfJgacCwPs',
+  username: process.env.WYZE_API_USERNAME,
+  password: process.env.WYZE_API_PASSWORD,
+  keyId: process.env.WYZE_KEY_ID,
+  apiKey: process.env.WYZE_API_KEY,
   persistPath: "./",
   logLevel: "none"
 }
@@ -167,16 +164,6 @@ app.get('/yale-admin', (req, res) => {
 
 app.post('/yale-login', (req, res) => {
 
-  // var yaleID = req.body.id;
-  // var yaleUsername = req.body.username;
-  // var yalePassword = req.body.password;
-
-  // let august = new August({
-  //   installId: yaleID, // Can be anything, but save it for future use on this account
-  //   augustId: yaleUsername, // Phone must be formatted +[countrycode][number]
-  //   password: yalePassword
-  // })
-
   august.authorize();
 
   res.send( JSON.stringify({ 'status_code' : '200', 'status' : 'Success! Please enter 6-digit verification code to continue.' }) )
@@ -186,10 +173,6 @@ app.post('/yale-login', (req, res) => {
 app.post('/yale-verification', (req, res) => {
 
   var verificationCode = req.body.verification_code;
-
-  // var yaleID = req.body.id;
-  // var yaleUsername = req.body.username;
-  // var yalePassword = req.body.password;
 
   august.validate(verificationCode)
 
@@ -221,7 +204,7 @@ app.post('/update-google-auth-code', (req, res) => {
             "database": "aerial-control",
             "collection": "google-api-credentials",
             "filter": {
-              "_id": { "$oid": "66b02787e823dde8a11aaef4" }
+              "_id": { "$oid": process.env.GOOGLE_CREDENTIALS_COLLECTION_ID }
             },
             "update": {
               "$set": {
@@ -235,7 +218,7 @@ app.post('/update-google-auth-code', (req, res) => {
             headers: {
               'Content-Type': 'application/json',
               'Access-Control-Request-Headers': '*',
-              'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+              'api-key': process.env.MONGO_API_KEY,
               'Accept': 'application/ejson'
             },
             data: data
@@ -276,7 +259,7 @@ async function updateGoogleApiTokens(){
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Request-Headers': '*',
-      'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+      'api-key': process.env.MONGO_API_KEY,
       'Accept': 'application/ejson'
     },
     data: data
@@ -287,8 +270,8 @@ async function updateGoogleApiTokens(){
         let payload = {
           grant_type: 'authorization_code',
           code: googleApiCode,
-          client_id: '591412541832-mtbatq6amcoedgat0lbn020lju7lt1mm.apps.googleusercontent.com',
-          client_secret: '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',
+          client_id: process.env.GOOGLE_API_CLIENT_ID,
+          client_secret: process.env.GOOGLE_API_CLIENT_SECRET,
           redirect_uri: 'https://aerial-control.onrender.com',
         };
         
@@ -305,7 +288,7 @@ async function updateGoogleApiTokens(){
               "database": "aerial-control",
               "collection": "google-api-credentials",
               "filter": {
-                "_id": { "$oid": "66b02787e823dde8a11aaef4" }
+                "_id": { "$oid": process.env.GOOGLE_CREDENTIALS_COLLECTION_ID }
               },
               "update": {
                 "$set": {
@@ -320,7 +303,7 @@ async function updateGoogleApiTokens(){
               headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Request-Headers': '*',
-                'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+                'api-key': process.env.MONGO_API_KEY,
                 'Accept': 'application/ejson'
               },
               data: data
@@ -345,8 +328,8 @@ async function updateGoogleApiTokens(){
 }
 
 app.post('/get-2-legged-access-token', (req, res) => {
-    let client_id = '6yNqqgh2UKJmromx7UqoP51x1znihSKhwvwejsAn7DVRg8w7';
-    let client_secret = '606cc7LUzSHEvUxGRkG5UsCpUlZIk6AwWv2VMTDlF7pgPeosnCSe5AQtsVNazcZ1';
+    let client_id = process.env.AUTODESK_CLIENT_ID;
+    let client_secret = process.env.AUTODESK_CLIENT_SECRET;
     let base64String = btoa(client_id + ':' + client_secret);
     var config = {
       method: 'POST',
@@ -385,7 +368,7 @@ app.post('/get-google-devices', (req, res) => {
         'Access-Control-Request-Headers': '*',
         'Authorization': 'Bearer ' + access_token
       },
-      url: 'https://smartdevicemanagement.googleapis.com/v1/enterprises/cdeecc8c-47ca-4a42-8a92-b08cb90c0f08/devices',
+      url: 'https://smartdevicemanagement.googleapis.com/v1/enterprises/' + process.env.GOOGLE_PROJECT_ID + '/devices',
     };
     axios(config)
       .then(function (response) {
@@ -412,7 +395,7 @@ async function refreshGoogleApiCredentials(){
 
   var config = {
     method: 'POST',
-    url: 'https://www.googleapis.com/oauth2/v4/token?client_id=591412541832-mtbatq6amcoedgat0lbn020lju7lt1mm.apps.googleusercontent.com&client_secret=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&refresh_token=' + refresh_token + '&grant_type=refresh_token',
+    url: 'https://www.googleapis.com/oauth2/v4/token?client_id=' + process.env.GOOGLE_API_CLIENT_ID + '&client_secret=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&refresh_token=' + refresh_token + '&grant_type=refresh_token',
   };
   axios(config)
     .then(function (response) {
@@ -460,7 +443,7 @@ app.post('/update-google-thermostat-temp', (req, res) => {
             };
             var config = {
               method: 'POST',
-              url: 'https://smartdevicemanagement.googleapis.com/v1/enterprises/cdeecc8c-47ca-4a42-8a92-b08cb90c0f08/devices/AVPHwEur0KdKJ3AGRboj7oajio8QqdeOxS71e5_W6fGZ09Bf7-ipD31g_yLzW4bSAFZFqm3e3FAOOhCXFrlWhHPyrGTNJQ:executeCommand?access_token=' + accessToken,
+              url: 'https://smartdevicemanagement.googleapis.com/v1/enterprises/' + process.env.GOOGLE_PROJECT_ID + '/devices/AVPHwEur0KdKJ3AGRboj7oajio8QqdeOxS71e5_W6fGZ09Bf7-ipD31g_yLzW4bSAFZFqm3e3FAOOhCXFrlWhHPyrGTNJQ:executeCommand?access_token=' + accessToken,
               contentType: 'application/json; charset=utf-8',
               dataType: 'json',
               async: false,
@@ -487,7 +470,7 @@ async function updateDBGoogleApiCredentials(){
     "database": "aerial-control",
     "collection": "google-api-credentials",
     "filter": {
-      "_id": { "$oid": "66b02787e823dde8a11aaef4" }
+      "_id": { "$oid": process.env.GOOGLE_CREDENTIALS_COLLECTION_ID }
     },
     "update": {
       "$set": {
@@ -502,7 +485,7 @@ async function updateDBGoogleApiCredentials(){
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Request-Headers': '*',
-      'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+      'api-key': process.env.MONGO_API_KEY,
       'Accept': 'application/ejson'
     },
     data: data
@@ -524,7 +507,7 @@ setTimeout(function(){
 
 app.post('/get-lock-status', (req, res) => {
   ; (async () => {
-    let lockStatus = await august.status('B718B554C0F1496A8B64704123E64972')
+    let lockStatus = await august.status(process.env.YALE_LOCK_ID)
     res.send( JSON.stringify(lockStatus) )
   })()
 
@@ -532,13 +515,13 @@ app.post('/get-lock-status', (req, res) => {
 
 app.post('/toggle-lock', (req, res) => {
   ; (async () => {
-    let lockStatus = await august.status('B718B554C0F1496A8B64704123E64972')
+    let lockStatus = await august.status(process.env.YALE_LOCK_ID)
     if(lockStatus.state.locked){
-      await august.unlock('B718B554C0F1496A8B64704123E64972')
+      await august.unlock(process.env.YALE_LOCK_ID)
     } else {
-      await august.lock('B718B554C0F1496A8B64704123E64972')
+      await august.lock(process.env.YALE_LOCK_ID)
     }
-    let newLockStatus = await august.status('B718B554C0F1496A8B64704123E64972')
+    let newLockStatus = await august.status(process.env.YALE_LOCK_ID)
     res.send( JSON.stringify(newLockStatus) )
 
   })()
@@ -566,7 +549,7 @@ app.post('/admin-login', (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     
-    if(username === 'admin' && password === 'Admin123!'){
+    if(username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD){
       var adminData = req.session.admin_data = {
         'name' : 'Admin',
         'access_type' : 'master',
@@ -587,10 +570,10 @@ app.post('/guest-login', (req, res) => {
   ; (async () => {
 
     var options = {
-      url: 'https://app.hosthub.com/api/2019-03-01/rentals/MgmyZyJNaq/calendar-events',
+      url: 'https://app.hosthub.com/api/2019-03-01/rentals/'+ process.env.SYNCBNB_PROPERTY_ID +'/calendar-events',
       method: 'GET',
       headers: {
-        'Authorization': 'ZTU4OWNkZjctMGMyMS00NTRhLWFkYTMtMmFmMDU0MDNlNmNl'
+        'Authorization': process.env.SYNCBNB_AUTH_CODE
       }
     };
   
@@ -605,7 +588,7 @@ app.post('/guest-login', (req, res) => {
               }
           }
 
-          if(foundValue !== 0 && (reservationEmailOrPhone === "test@test.com")){
+          if(foundValue !== 0 && (reservationEmailOrPhone === process.env.TEST_EMAIL)){
             req.session.reservation_data = foundValue;
             res.send( JSON.stringify(foundValue) )
             return foundValue;
