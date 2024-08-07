@@ -6,7 +6,10 @@ const path = require('path');
 const request = require('request');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-require('dotenv').config()
+
+if(port === 4000){
+  require('dotenv').config()
+}
 
 var axios = require('axios');
 
