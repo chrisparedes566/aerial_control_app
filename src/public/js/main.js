@@ -53,3 +53,24 @@ function getUserDataFromCookie(key = null){
         return JSON.parse($.cookie("reservation_data"));
     }
 }
+
+function toggleDashSwitch(elem, path){
+    $.ajax({
+        type: 'POST',
+        url: path,
+        dataType: 'json',
+        success: function(resultData) {
+            console.log(resultData)
+            var switchState = resultData.device_params.switch_state;
+            if (switchState === 1) {
+                elem.addClass( 'off' );
+                elem.removeClass( 'on' );
+                elem.find('.device-status label').text( 'OFF' );
+            } else if (switchState === 0) {
+                elem.addClass( 'on' );
+                elem.removeClass( 'off' );
+                elem.find('.device-status label').text( 'ON' );
+            }
+        }
+    })
+}

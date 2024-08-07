@@ -431,7 +431,7 @@ app.post('/update-google-thermostat-temp', (req, res) => {
   ; (async () => {
 
           await getGoogleApiCredentials();
-
+          console.log('test')
           setTimeout(function(){
             var accessToken = googleApiCredentials.access_token
             var coolCelsius = Number(req.body.coolCelsius);
@@ -646,6 +646,20 @@ app.post('/get-status', (req, res) => {
   })()
 })
 
+app.post('/get-entrance-light-status', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('Entrance Light')
+  state = device.device_params.switch_state
+  res.send( JSON.stringify(state) )
+
+  })()
+})
+
 app.post('/get-neon-status', (req, res) => {
   const wyze = new Wyze(options, logger)
 
@@ -807,6 +821,32 @@ app.post('/string-light-switch', (req, res) => {
   res.send( updatedDevice )
 
   })()
+})
+
+app.post('/entrance-light-switch', (req, res) => {
+  const wyze = new Wyze(options, logger)
+
+; (async () => {
+  let device, state, result
+
+  // Get a Wyze Bulb by name and turn it off.
+  device = await wyze.getDeviceByName('Entrance Light')
+  state = device.device_params.switch_state
+
+  if(state === 1){
+      await wyze.wallSwitchPowerOff(device.mac, device.product_model)
+  } else {
+      await wyze.wallSwitchPowerOn(device.mac, device.product_model)
+  }
+
+  updatedDevice = await wyze.getDeviceByName('Entrance Light')
+  
+  console.log(updatedDevice)
+
+  res.send( updatedDevice )
+
+  })()
+
 })
 
 app.post('/pool-led-switch', (req, res) => {
