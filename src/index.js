@@ -293,7 +293,8 @@ async function updateGoogleApiTokens(){
               "update": {
                 "$set": {
                   "access_token": res.data.access_token,
-                  "refresh_token": res.data.refresh_token
+                  "refresh_token": res.data.refresh_token,
+                  "last_update" : Date.now()
                 }
               }
             });
@@ -403,7 +404,7 @@ async function refreshGoogleApiCredentials(){
         console.log(refreshedGoogleApiCredentials.data);
         setTimeout(function(){
           updateDBGoogleApiCredentials();
-        }, 500);
+        }, 1000);
         return response;
     })
     .catch(function (error) {
@@ -452,7 +453,6 @@ app.post('/update-google-thermostat-temp', (req, res) => {
             console.log(data)
             axios(config)
               .then(function (response) {
-                  refreshGoogleApiCredentials();
                   res.send( JSON.stringify(response.data) )
               })
               .catch(function (error) {
@@ -476,6 +476,7 @@ async function updateDBGoogleApiCredentials(){
     "update": {
       "$set": {
         "access_token": refreshedGoogleApiCredentials.access_token,
+        "last_update" : Date.now()
       }
     }
   });

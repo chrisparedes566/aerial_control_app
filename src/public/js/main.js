@@ -43,7 +43,9 @@ $(document).on('click', '.left-menu, .left-nav .fa-close', function(){
 
 $(document).ready(function(){
     checkCredentials();
-    checkGoogleAuthCode();
+    setTimeout(function(){
+        checkGoogleAuthCode();
+    },2000)
 });
 
 function getUserDataFromCookie(key = null){
