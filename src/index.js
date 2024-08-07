@@ -13,9 +13,6 @@ if(port === 4000){
 
 var axios = require('axios');
 
-const airbnb = require('airbnbapijs');
-airbnb.testAuth('faketoken3sDdfvtF9if5398j0v5nui')
-
 let August = require('august-api');
 
 let august = new August({
