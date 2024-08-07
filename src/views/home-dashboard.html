@@ -1,0 +1,1022 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Aerial Control - Kendall Keys Dashboard</title>
+		<meta charset="utf-8" />
+        <meta name="viewport" content="user-scalable=0, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+        <script src="https://unpkg.com/gsap@3/dist/Draggable.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unica+One&amp;display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&amp;display=swap">
+        <style>
+            :root {
+  touch-action: pan-x pan-y;
+  height: 100% 
+}
+            * {
+                touch-action: manipulation !important;
+            }
+            body
+            {
+                touch-action: manipulation !important;
+                background-color: #e3edf7;
+                font-family: 'Poppins', sans-serif;
+            }
+
+            #sha_app
+            {
+                padding: 20px 7px;
+                max-width: 600px;
+                margin: 0 auto;
+                box-shadow: 0 0 35px -6px #fff;
+            }
+
+            /** Start Section Header Bar Style **/
+            #sha_header_bar
+            {
+                color: rgba(49,69,106,0.6);
+            }
+
+            #sha_header_bar span
+            {
+                display: block;
+            }
+
+            #sha_header_bar span.sub-heading
+            {
+              font-size: 12px;
+              font-weight: 500;
+              padding-top: 8px;
+              padding-left: 18px;
+              padding-bottom: 8px;
+              margin-top: 8px;
+            }
+
+            #sha_header_bar span.heading
+            {
+                color: rgba(49,69,106,1);
+                font-size: 25px;
+                font-weight: 400;
+                padding-left: 18px;
+            }
+            /** End Section Header Bar Style **/
+
+            /** Start Section Button List Style **/
+            #sha_button_list 
+            {
+                margin-top: 10px;
+            }
+
+            #sha_button_list ul
+            {
+                padding: 0;
+            }
+
+            #sha_button_list ul li, ul li
+            {
+              list-style: none;
+              float: left;
+              width: 25%;
+              text-align: center;
+              padding: 10px 0;
+              height: 100%;
+              position: relative;
+            }
+
+            #sha_button_list ul li:first-child
+            {
+                margin-left: -5px;
+            }
+
+            #sha_button_list ul li span, ul li.on span
+            {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                border-radius: 15px;
+            }
+
+            #sha_button_list ul li.off span
+            {
+                color: rgba(49,69,106,0.35);
+
+                box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+                            -6px -6px 10px -1px rgba(255,255,255,0.7);
+
+                border: 1px solid rgba(0,0,0,0.0);
+            }
+
+            #sha_button_list ul li.on span, ul li.on span
+            {
+                color: rgba(49,69,106,1);
+
+                box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+                            inset -4px -4px 6px -1px rgba(255,255,255,0.7),
+                            -0.5px -0.5px 0 rgba(255,255,255,1),
+                            0.5px 0.5px 0 rgba(0,0,0,0.15),
+                            0px 12px 10px -10px rgba(0,0,0,0.05);
+                border: 1px solid rgba(0,0,0,0.01);
+            }
+            /** End Section Button List Style **/
+
+            /** Start Section Body 1 Style **/
+            #sha_temp_body
+            {
+                text-align: center;
+                margin-top: 30px;
+            }
+
+            #sha_temp_body .sha_temp
+            {
+                position: relative;
+                display: inline-block;
+                width: 180px;
+                height: 180px;
+                min-width: 180px;
+                min-height: 180px;
+                border-radius: 100%;
+                text-align: center;
+                box-shadow: 30px 30px 30px -10px rgba(0,0,0,0.1),
+                            -30px -30px 30px -10px rgba(255,255,255,0.4),
+                            -0.5px -0.5px 0 rgba(255,255,255,1),
+                            0.5px 0.5px 0 rgba(0,0,0,0.02);
+            }
+
+            #sha_temp_body .sha_temp > span
+            {
+                position: relative;
+                display: inline-block;
+                top: 50%;
+                transform: translateY(-60%);
+            }
+
+            #sha_temp_body .sha_temp > span > span.temp-data
+            {
+                font-size: 60px;
+                font-weight: 600;
+                display: block;
+                color: rgba(49,69,106,1);
+            }
+
+            #sha_temp_body .sha_temp > span > span.temp-data sup
+            {
+                position: absolute;
+                font-size: 15px;
+                font-weight: 500;
+                top: 24%;
+            }
+
+            #sha_temp_body .sha_temp > span > span.temp-info
+            {
+                position: absolute;
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(49,69,106,0.6);
+                white-space: nowrap;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            #sha_temp_body .sha_temp:before
+            {
+                position: absolute;
+                content: '';
+                display: block;
+                width: 88%;
+                height: 88%;
+                border-radius: inherit;
+                left: 50%;
+                top: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+                            inset -4px -4px 6px -1px rgba(255,255,255,0.7);
+            }
+
+            #sha_temp_body .sha_temp:after
+            {
+                position: absolute;
+                content: '';
+                display: block;
+                width: 78%;
+                height: 78%;
+                border-radius: inherit;
+                left: 50%;
+                top: 50%;
+                background-color: rgba(0,0,0,0.025);
+                border: 1px solid rgba(0,0,0,0.01);
+                transform: translateX(-50%) translateY(-50%);
+                box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+                            inset -4px -4px 6px -1px rgba(255,255,255,0.7);
+            }
+            /** End Section Body 1 Style **/
+
+            /** Start Section Body 2 Style **/
+            #sha_temp_meta
+            {
+                margin-top: 30px;
+            }
+
+            #sha_temp_meta .sha_tile > div
+            {
+                position: relative;
+                border: 1px solid rgba(255,255,255,0.7);
+                background-color: rgba(0,0,0,0.01);
+                border-radius: 15px;  
+                padding: 22px;
+                box-shadow: 15px 5px 20px -10px rgba(0,0,0,0.15),
+                            -15px -5px 20px -10px rgba(255,255,255,0.8);
+            }
+
+            #sha_temp_meta .sha_tile > div span.tile_icon
+            {
+                display: inline-block;
+                width: 60px;
+                height: 60px;
+                text-align: center;
+                line-height: 60px;
+                font-size: 20px;
+                border-radius: 15px;
+                border: 1px solid rgba(0,0,0,0.02);
+                background-color: rgba(0,0,0,0.01);
+                color: rgba(49,69,106,0.6);
+                box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+                            -6px -6px 10px -1px rgba(255,255,255,0.7);
+            }
+
+            #sha_temp_meta .sha_tile > div span.tile_info
+            {
+                position: absolute;
+                display: inline-block;
+                font-size: 16px;
+                font-weight: 500;
+                color: rgba(49,69,106,0.8);
+                padding-left: 14px;
+                margin-top: 5px;
+            }
+
+            #sha_temp_meta .sha_tile > div span.tile_info span
+            {
+                display: block;
+                font-weight: 400;
+                color: rgba(49,69,106,0.5);
+            }
+
+            #sha_temp_meta .sha_tile:not(last-child)
+            {
+                margin-bottom: 12px;
+            }
+            /** End Section Body 2 Style **/
+
+            /** Start Section Footer Style **/
+            #sha_footer
+            {
+                margin-top: 15px;
+                color: rgba(49,69,106,0.5);
+            }
+
+            #sha_footer .footer_title
+            {
+                font-size: 15px;
+                display: block;
+            }
+
+            #sha_footer .footer_data
+            {
+                font-size: 18px;
+                font-weight: 500;
+                color: rgba(49,69,106,1);
+            }
+
+            #sha_footer .footer_data span
+            {
+                color: rgba(49,69,106,0.5);
+            }
+
+            #sha_footer .sha_switch
+            {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 30px;
+                border-radius: 25px;
+                border: 1px solid rgba(255,255,255,0.7);
+                background-color: rgba(0,255,0,0.6);
+                box-shadow: inset 4px 4px 8px rgba(0,0,0,0.15);
+                margin-top: 2px;
+            }
+
+            #sha_footer .sha_switch:before
+            {
+                content: '';
+                position: absolute;
+                width: 30px;
+                height: 26px;
+                background-color: #e3edf7;
+                border-radius: 12px;
+                right: 1px;
+                top: 1px;
+                box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.15);
+            }
+            /** End Section Footer Style **/
+
+            li.off.lock .fa-lock {
+                color: rgba(49, 69, 106, 1) !important;
+            }
+            .device-label {
+    margin-bottom: 8px;
+}
+label {
+    font-size: 11px;
+    color: rgba(49, 69, 106, 1);
+    font-family: Avenir Next;
+    font-weight: 500;
+}
+.device-status {
+    margin-top: 4px;
+}
+.device-status label {
+    font-size: 11px;
+    color: rgba(49, 69, 106, 1);
+    font-family: Avenir Next;
+    font-weight: 500;
+}
+ul.device-widgets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #fff;
+    border-left: 0;
+    border-right: 0;
+    margin: 30px 0;
+    padding: 24px 0 !important;
+}
+section#sha_temp_body > .row > .col-12 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+section#sha_temp_body > .row > .col-12 ul {
+    padding: 0;
+    margin: 0 10px;
+}
+i.fa.fa-minus {
+    color: #549fec;
+}
+#sha_temp_body i.fa.fa-plus {
+    color: #e49898;
+}
+.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.loading:before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: url(/css/images/loading_spinner.gif);
+    display: flex;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-top: 4px;
+}
+
+ul.device-widgets > li span {
+    cursor: pointer;
+}
+.device-widgets > li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+span#front-door-lock {
+    color: rgba(49, 69, 106, 1) !important;
+}
+#sha_temp_body ul li.on span {
+    box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15), -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.0);
+}
+section#rooms-list-section {
+    margin-top: 32px;
+}
+.rooms-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #fff;
+    border-left: 0;
+    border-right: 0;
+    margin: 30px 0;
+    padding: 24px 0 !important;
+}
+.room {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    margin-right: 12px;
+    border-radius: 15px;
+    box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15), -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+    border: 1px solid #ffffffc7;
+    position: relative;
+    overflow: hidden;
+}
+.room-details {
+    position: absolute;
+    background: #595959b5;
+    width: 100%;
+    bottom: 0;
+    font-size: 12px;
+    height: 16px;
+    padding: 6px 12px;
+    max-width: 95px;
+    color: #f4f4f4;
+    font-family: Avenir Next;
+    text-align: right;
+    box-shadow: 0 0 40px 6px #000;
+}
+#sha_header_bar span.heading {
+    display: flex;
+    flex-wrap: nowrap;
+}
+        </style>
+        <script>
+            document.ondblclick = function(e) {
+                e.preventDefault();
+            }
+            var lockStatus;
+            function toggleLock(elem){
+                var elemParent = $(elem).parent()
+                elemParent.addClass('loading');
+                elemParent.addClass('on');
+                elemParent.removeClass('off');
+                $.ajax({
+                    type: 'POST',
+                    url: '/toggle-lock',
+                    success: function(result) {
+                        console.log(result);
+                        lockStatus = JSON.parse(result);
+                        elemParent.removeClass('loading');
+                    },
+                    complete: function(){
+                      if(lockStatus.state.locked){
+                          elemParent.find('.fa-lock').removeClass('fa-unlock');
+                          elemParent.find('.fa').addClass('fa-lock');
+                          elemParent.find('.device-status label').text('LOCKED');
+                        } else {
+                          elemParent.find('.fa-lock').removeClass('fa-lock');
+                          elemParent.find('.fa').addClass('fa-unlock');
+                          elemParent.find('.device-status label').text('UNLOCKED');
+                        }
+                        elemParent.addClass('off');
+                        elemParent.removeClass('on');
+                    }
+                });   
+            }
+            
+            var currentLockStatus;
+            setInterval(function(){
+                $.ajax({
+                type: 'POST',
+                url: '/get-lock-status',
+                success: function(result) {
+                  currentLockStatus = JSON.parse(result).state
+                },
+                complete: function(){
+                                  console.log('updated status')
+                                  var lockButton = $('li.lock');
+                                  if(currentLockStatus.locked){
+                                      lockButton.find('.fa').removeClass('fa-unlock');
+                                      lockButton.find('.fa').addClass('fa-lock');
+                                      lockButton.find('.device-status label').text('LOCKED');
+                                    } else {
+                                      lockButton.find('.fa').removeClass('fa-lock');
+                                      lockButton.find('.fa').addClass('fa-unlock');
+                                      lockButton.find('.device-status label').text('UNLOCKED');
+                                    }
+                                    lockButton.addClass('off');
+                                    lockButton.removeClass('on');
+                                }
+                });
+            }, 8000)
+        </script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div id="sha_app" class="row">
+              <!-- Start Section Header Bar -->
+              <section id="sha_header_bar" class="col-12">
+                <div class="row">
+                  <div class="col-12">
+                    <i class="fa fa-chevron-left"></i>
+                  </div>
+                  <div class="col-12">
+                    <span id="datetime" class="sub-heading date">
+                      <script>
+                        function updateDateTime() {
+                          // create a new `Date` object
+                          const now = new Date();
+
+                          // get the current date and time as a string
+                          const currentDateTime = now.toLocaleString();
+
+                          // update the `textContent` property of the `span` element with the `id` of `datetime`
+                          document.querySelector('#datetime').textContent = currentDateTime;
+                        }
+
+                        // call the `updateDateTime` function every second
+                        setInterval(updateDateTime, 1000);
+                      </script>
+                    </span>
+                    <span class="heading">Welcome home<span class="users-first-name"></span></span>
+                  </div>
+                </div>
+              </section>
+              <!-- End Section Header Bar -->
+          
+              <!-- Start Section Button List -->
+              <section id="sha_button_list" class="col-12">
+                <div class="row">
+                  <div class="col-12">
+                    <ul class="device-widgets">
+                        <li class="off lock">
+                            <div class="device-label">
+                                <label>Front door</label>
+                            </div>
+                            <span id="front-door-lock" onclick="toggleLock($(this))">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                            <div class="device-status">
+                                <label>LOCKED</label>
+                            </div>
+                        </li>
+                      <li class="on">
+                        <div class="device-label">
+                            <label>Entryway light</label>
+                        </div>
+                        <span>
+                          <i class="fa fa-lightbulb-o"></i>
+                        </span>
+                        <div class="device-status">
+                            <label>ON</label>
+                        </div>
+                      </li>
+                      <li class="off" onclick="connectToWifi($(this));">
+                        <div class="device-label">
+                            <label>WiFi</label>
+                        </div>
+                        <span>
+                          <i class="fa fa-wifi"></i>
+                        </span>
+                        <div class="device-status">
+                            <label>Connect</label>
+                        </div>
+                      </li>
+                      <script>
+                        function connectToWifi(wifiElem){
+                          $.ajax({
+                              type: 'POST',
+                              url: '/connect-to-wifi',
+                              success: function(result) {
+                                //console.log(wifiElem)
+                                  //wifiElem.removeClass('off');
+                                  //wifiElem.addClass('on');
+                              }
+                          });
+                          wifiElem.removeClass('off');
+                          wifiElem.addClass('on');
+                          wifiElem.find('.device-status label').html('Connected');
+                        }
+                      </script>
+                      <li class="off">
+                        <span>
+                          <i class="fa fa-snowflake-o"></i>
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+              <!-- End Section Button List -->
+          
+              <!-- Start Section Body 1 -->
+              <section id="sha_temp_body" class="col-12">
+                <div class="row">
+                  <div class="col-12">
+                    <ul>
+                        <li class="on">
+                        <span>
+                          <i class="fa fa-minus"></i>
+                        </span>
+                      </li>
+                    </ul>
+                    <!-- <span class="sha_temp">
+                      <span>
+                        <span class="temp-data"> 74 <sup>°F</sup> </span>
+                        <span class="temp-info">
+                          <i class="fa fa-snowflake-o"></i> Cooling
+                        </span>
+                      </span>
+                    </span> -->
+                    <div class="temp">
+                      <div class="temp__logo">Nest</div>
+                      <div class="temp__comet"></div>
+                      <canvas class="temp__fizz"></canvas>
+                      <div class="temp__label">Temp</div>
+                      <div class="temp__value">73</div>
+                      <div class="temp__dial"></div>
+                    </div>
+                    <script>
+                      document.addEventListener("DOMContentLoaded",function(){
+	const thermostat = new Thermostat(".temp");
+});
+
+class Thermostat {
+	constructor(el) {
+		this.el = document.querySelector(el);
+		this.temp = 73;
+		this.tempMin = 67;
+		this.tempMax = 78;
+		this.fizz = null;
+		this.fizzParticleCount = 600;
+		this.fizzParticles = [];
+		this.fc = null;
+		this.fW = 240;
+		this.fH = 240;
+		this.fS = window.devicePixelRatio;
+		this.init();
+	}
+	init() {
+		window.addEventListener("keydown",this.kbdEvent.bind(this));
+
+		if (this.el) {
+			this.fizz = this.el.querySelector(".temp__fizz");
+			if (this.fizz) {
+				this.fc = this.fizz.getContext("2d");
+
+				let f = this.fizzParticleCount;
+
+				while (f--) {
+					this.fizzParticles.push(
+						{
+							radius: 1, 
+							// from center to comet ring
+							minDist: this.randInt(100,115),
+							maxDist: this.randInt(85,115),
+							// rotation along the comet ring circumference
+							minRot: this.randInt(-180,180),
+							maxRot: this.randInt(-180,180),
+							// position
+							x: 0, 
+							y: 0
+						}
+					);
+				}
+
+				this.fizz.width = this.fW * this.fS;
+				this.fizz.height = this.fH * this.fS;
+				this.fc.scale(this.fS,this.fS);
+			}
+		}
+
+		Draggable.create(".temp__dial",{
+			type: "rotation",
+			bounds: {
+				minRotation: 40, 
+				maxRotation: 345
+			},
+			onDrag: () => {
+				this.tempAdjust("drag");
+			}
+		});
+	}
+	degToRad(deg) {
+		return deg * (Math.PI / 180);
+	}
+	randInt(min,max) {
+		return Math.round(Math.random() * (max - min)) + min;
+	}
+	angleFromMatrix(transVal) {
+		let matrixVal = transVal.split('(')[1].split(')')[0].split(','),
+			[cos1,sin] = matrixVal.slice(0,2),
+			angle = Math.round(Math.atan2(sin,cos1) * (180 / Math.PI)) * -1;
+		
+		// convert negative angles to positive
+		if (angle < 0)
+			angle += 360;
+		
+		if (angle > 0)
+			angle = 360 - angle;
+		
+		return angle;
+	}
+	kbdEvent(e) {
+		let kc = e.keyCode;
+
+		if (kc) {
+			// up or right
+			if (kc == 38 || kc == 39)
+				this.tempAdjust("u");
+			// left or down
+			else if (kc == 37 || kc == 40)
+				this.tempAdjust("d");
+		}
+	}
+	tempAdjust(inputVal) {
+		/*
+		inputVal can be the temp as an integer, "u" for up, 
+		"d" for down, or "drag" for dragged value
+		*/
+		if (this.el) {
+			let cs = window.getComputedStyle(this.el),
+				tempDisplay = this.el.querySelector(".temp__value"),
+				tempDial = this.el.querySelector(".temp__dial"),
+				tempRange = this.tempMax - this.tempMin,
+				hueStart = 240,
+				hueEnd = 360,
+				hueRange = hueEnd - hueStart,
+				notDragged = inputVal != "drag";
+			// input is an integer
+			if (!isNaN(inputVal)) {
+				this.temp = inputVal;
+			// input is a given direction
+			} else if (inputVal == "u") {
+				if (this.temp < this.tempMax)
+					++this.temp;
+
+			} else if (inputVal == "d") {
+				if (this.temp > this.tempMin)
+					--this.temp;
+			// GreenSock drag was used
+			} else if (inputVal ==  "drag") {
+				if (tempDial) {
+					let tempDialCS = window.getComputedStyle(tempDial),
+						trans = tempDialCS.getPropertyValue("transform"),		
+						angle = this.angleFromMatrix(trans);
+
+					this.temp = (angle / 360) * tempRange + this.tempMin;
+				}
+			}
+			// keep the temperature within bounds
+			if (this.temp < this.tempMin)
+				this.temp = this.tempMin;
+			else if (this.temp > this.tempMax)
+				this.temp = this.tempMax;
+			// use whole number temperatures for keyboard control
+			if (notDragged)
+				this.temp = Math.round(this.temp);
+
+			let relTemp = this.temp - this.tempMin,
+				frac = relTemp / tempRange,
+				angle = frac * 360,
+				newHue = hueStart + (frac * hueRange);
+
+			// fizz
+			let c = this.fc;
+			if (c) {
+				c.clearRect(0,0,this.fW,this.fH);
+				c.fillStyle = `hsla(${newHue},100%,50%,0.5)`;
+				c.globalAlpha = 0.25 + (0.75 * frac);
+
+				let centerX = this.fW / 2,
+					centerY = this.fH / 2,
+					fizzCount = this.fizzParticles.length;
+
+				this.fizzParticles.forEach((p,i) => {
+					let pd = p.minDist + frac * (p.maxDist - p.minDist),
+						pa = p.minRot + frac * (p.maxRot - p.minRot);
+
+					p.x = centerX + pd * Math.sin(this.degToRad(pa));
+					p.y = centerY + pd * Math.cos(this.degToRad(pa));
+
+					c.beginPath();
+					c.arc(p.x,p.y,p.radius,0,Math.PI * 2);
+					c.fill();
+					c.closePath();
+				});
+			}
+			// CSS variables
+			this.el.style.setProperty("--angle",angle);
+			this.el.style.setProperty("--hue",newHue);
+			// hidden dial
+			if (tempDial && notDragged)
+				tempDial.style.transform = `rotate(${angle}deg)`;
+			// display value
+			if (tempDisplay)
+				tempDisplay.textContent = Math.round(this.temp);
+		}
+	}
+}
+
+function setNewTemp(temp){
+    $.ajax({
+        type: 'POST',
+        data: {
+            "coolCelsius" : temp
+        },
+        dataType: 'json',
+        url: '/update-google-thermostat-temp',
+        success: function(result) {
+            console.log(result);
+        }
+    });
+}
+var fToC = function(f) {
+  return (f - 32) * (5/9);
+};
+$('.temp').bind('touchend mouseup', function(e){
+    var temp = fToC(Number($('.temp__value').text()));
+    setNewTemp(temp);
+});
+                    </script>
+                    <style>.temp {
+                      --angle: 0;
+                      --hue: 240;
+                      background-image: radial-gradient(100% 100% at 50% 50%, hsl(var(--hue), 90%, 17%) 3.55em, hsla(var(--hue), 90%, 17%, 0) 3.6em), radial-gradient(100% 100% at 50% 50%, hsl(var(--hue), 90%, 10%), hsl(var(--hue), 90%, 23%) 4.65em, hsl(var(--hue), 90%, 55%) 4.85em 4.9em, #17181c 5.1em 6.85em, #17181c00 6.9em), radial-gradient(100% 100% at 50% 0, #f1f2f4, #8f95a3);
+                      border-radius: 50%;
+                      box-shadow: 6px 6px 10px -1px rgb(0 0 0 / 30%), -6px -6px 10px -1px rgba(255, 255, 255, 0.8);
+                      display: flex;
+                      flex-direction: column;
+                      line-height: 1;
+                      position: relative;
+                      padding: 66px;
+                      text-align: center;
+                      width: 120px;
+                      height: 120px;
+                      justify-content: center;
+                      min-width: 120px;
+                      min-height: 120px;
+                      scale: 0.9;
+                    }
+                    .temp:after,
+                    .temp__dial,
+                    .temp__comet,
+                    .temp__fizz {
+                      position: absolute;
+                    }
+                    .temp:after,
+                    .temp__comet,
+                    .temp__dial {
+                      border-radius: inherit;
+                    }
+                    .temp:after,
+                    .temp__dial {
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                    }
+                    .temp:after {
+                      background: radial-gradient(100% 100% at 67% 17%, #fff3, #fff0 6em);
+                      content: "";
+                      display: block;
+                      z-index: 2;
+                    }
+                    .temp__logo {
+                      font-family: "Baloo Paaji 2", sans-serif;
+                      color: #d4d6d9;
+                      letter-spacing: -1px;
+                      margin-bottom: 20px;
+                      text-transform: lowercase;
+                      transform: scaleY(1);
+                      z-index: 1;
+                      position: absolute;
+                      top: 28px;
+                      left: calc(50% - 15px);
+                    }
+                    .temp__comet {
+                      background: radial-gradient(
+                          100% 100% at 50% 50%,
+                          hsl(var(--hue), 90%, 10%),
+                          hsl(var(--hue), 90%, 20%) 3.25em,
+                          hsl(var(--hue), 90%, 17%) 3.3em 3.35em,
+                          hsla(var(--hue), 90%, 17%, 0) 3.4em
+                        ),
+                        conic-gradient(
+                          #fff0,
+                          #fff calc(1deg * var(--angle)),
+                          #fff0 calc(1deg * var(--angle))
+                        );
+                      top: calc(50% - 3.5em);
+                      left: calc(50% - 3.5em);
+                      width: 7em;
+                      height: 7em;
+                    }
+                    .temp__fizz {
+                      display: block;
+                      top: calc(50% - 3.3em);
+                      left: calc(50% - 3.3em);
+                      width: 6.6em;
+                      height: 6.6em;
+                    }
+                    .temp__label,
+                    .temp__value {
+                      color: #fff;
+                      font-family: "Unica One", monospace;
+                      position: relative;
+                      z-index: 1;
+                    }
+                    .temp__label {
+                      font-size: 14px;
+                      letter-spacing: 2px;
+                      text-transform: uppercase;
+                    }
+                    .temp__value {
+                      font-size: 3.5em;
+                    }
+                    .temp__dial {
+                      cursor: grab;
+                      z-index: 3;
+                    }
+                    .temp__dial:active {
+                      cursor: grabbing;
+                    }
+                    /* Dark theme */
+                    @media (prefers-color-scheme: dark) {
+                      :root {
+                        --bg: #2e3138;
+                      }
+                    }</style>
+                    <ul>
+                        <li class="on">
+                        <span>
+                          <i class="fa fa-plus"></i>
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+              <!-- End Section Body 1 -->
+
+              <section id="rooms-list-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="rooms-container">
+                            <div class="room" style="background: url(https://a0.muscache.com/im/pictures/miso/Hosting-49964761/original/d8692306-0b3d-408a-a63d-2e6fa0e6de05.jpeg?im_w=1440); background-size: auto 125px; background-position: center left; filter: opacity(0.5) grayscale(0.8);">
+                              <div class="room-details">
+                                <span>Master Bedroom</span>
+                              </div>
+                            </div>
+                            <div class="room" style="background: url(https://a0.muscache.com/im/pictures/miso/Hosting-49964761/original/1b25b64f-f5d6-41ee-bd91-99a005bea929.jpeg?im_w=1440);background-size: auto 120px;background-position: -25px center;">
+                              <div class="room-details">
+                                <span>Backyard</span>
+                              </div>
+                            </div>
+                            <div class="room" style="background: url(https://a0.muscache.com/im/pictures/airflow/Hosting-49964761/original/a23ea32d-7298-44f4-9fcd-3c64d05bda9a.jpg?im_w=1440); background-size: auto 125px; background-position: -10px center; filter: opacity(0.5) grayscale(0.8);">
+                              <div class="room-details">
+                                <span>El Dorado</span>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </section>
+          
+              <!-- Start Section Body 2 -->
+              <section id="sha_temp_meta" class="col-12">
+                <div class="row">
+                  <div class="col-12 sha_tile">
+                    <div>
+                      <span class="tile_icon">
+                        <i class="fa fa-fire"></i>
+                      </span>
+                      <span class="tile_info">
+                        Humidity
+                        <span>65%</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-12 sha_tile">
+                    <div>
+                      <span class="tile_icon">
+                        <i class="fa fa-wifi"></i>
+                      </span>
+                      <span class="tile_info">
+                        Internet
+                        <span>20 mbps</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- End Section Body 2 -->
+            </div>
+        </div>
+    <script src="/js/main.js"></script>
+		<script src="/js/cookie.min.js"></script>
+    <script>
+        if(getUserDataFromCookie("guest_name") !== undefined){
+            let name = getUserDataFromCookie("guest_name");
+            let firstName = name.split(" ")[0];
+            $('.users-first-name').text(', ' + firstName);
+        }
+    </script>
+	</body>
+</html>

@@ -11,6 +11,81 @@ const session = require('express-session');
 //var redisStore = require('connect-redis').default;
 //var client  = redis.createClient();
 
+var axios = require('axios');
+
+const airbnb = require('airbnbapijs');
+airbnb.testAuth('faketoken3sDdfvtF9if5398j0v5nui')
+
+let August = require('august-api');
+
+let august = new August({
+  installId: /*yaleID ||*/ "Chris6964549!", // Can be anything, but save it for future use on this account
+  augustId: /*yaleUsername || */ "chrisparedes566@gmail.com", // Phone must be formatted +[countrycode][number]
+  password: /*yalePassword ||*/ "Chris6964549!"
+})
+
+const wifi = require('node-wifi');
+
+// Initialize wifi module
+// Absolutely necessary even to set interface to null
+wifi.init({
+  iface: null // network interface, choose a random wifi interface if set to null
+});
+
+app.post('/connect-to-wifi', (req, res) => {
+  // Connect to a network
+  wifi.connect({ ssid: '10018 House', password: 'AirBnB10018!' }, () => {
+    console.log('Connected'); 
+  });
+})
+
+app.post('/redirect-to-oauth-server', (req, res) => {
+  res.redirect(authorizationUrl);
+})
+
+let googleApiCredentials;
+
+app.post('/get-google-api-credentials', (req, res) => {
+  ; (async () => {
+
+    await getGoogleApiCredentials();
+    res.send(googleApiCredentials)
+
+  })()
+
+})
+
+
+async function getGoogleApiCredentials(){
+
+        var data = JSON.stringify({
+          "collection": "google-api-credentials",
+          "database": "aerial-control",
+          "dataSource": "aerial-control"
+        });
+        var config = {
+          method: 'post',
+          url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vefznnv/endpoint/data/v1/action/findOne',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Request-Headers': '*',
+            'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+            'Accept': 'application/ejson'
+          },
+          data: data
+        };
+         await axios(config)
+          .then(function (response) {
+            googleApiCredentials = response.data.document;
+            return response.data.document;
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+      
+}
+
+
 app.use(session({
   secret: 'SECRET_KEY',
   // create new redis store.
@@ -56,7 +131,17 @@ function checkLogin(req, res, next) {
   }
 }
 
+function checkAdminLogin(req, res, next) {
+  //check login here
+  if (req.session.admin_data) {
+      next();
+  } else {
+      return res.redirect(req.baseUrl + "/admin-login");
+  }
+}
+
 app.get('/', (req, res) => {
+  // Store state in the session
   if(req.session.reservation_data){
     res.render('device-dashboard')
   } else {
@@ -64,8 +149,400 @@ app.get('/', (req, res) => {
   }
 })
 
+app.get('/admin', (req, res) => {
+  res.render('admin-login')
+})
+
 app.get('/rooms', checkLogin, (req, res) => {
   res.render('rooms')
+})
+
+app.get('/home-dashboard', (req, res) => {
+  res.render('home-dashboard')
+})
+
+app.get('/yale-admin', (req, res) => {
+  res.render('yale-admin')
+})
+
+app.post('/yale-login', (req, res) => {
+
+  // var yaleID = req.body.id;
+  // var yaleUsername = req.body.username;
+  // var yalePassword = req.body.password;
+
+  // let august = new August({
+  //   installId: yaleID, // Can be anything, but save it for future use on this account
+  //   augustId: yaleUsername, // Phone must be formatted +[countrycode][number]
+  //   password: yalePassword
+  // })
+
+  august.authorize();
+
+  res.send( JSON.stringify({ 'status_code' : '200', 'status' : 'Success! Please enter 6-digit verification code to continue.' }) )
+
+})
+
+app.post('/yale-verification', (req, res) => {
+
+  var verificationCode = req.body.verification_code;
+
+  // var yaleID = req.body.id;
+  // var yaleUsername = req.body.username;
+  // var yalePassword = req.body.password;
+
+  august.validate(verificationCode)
+
+  res.send( JSON.stringify({ 'status_code' : '200', 'status' : 'Success!' }) )
+
+})
+
+app.post('/get-yale-locks', (req, res) => {
+  ; (async () => {
+    let lockDetails
+    
+    lockDetails = await august.details()
+
+    console.log(lockDetails)
+
+    res.send( JSON.stringify(lockDetails) )
+
+  })()
+
+})
+
+app.post('/update-google-auth-code', (req, res) => {
+  ; (async () => {
+
+          var googleApiCode = req.body.google_api_code;
+
+          var data = JSON.stringify({
+            "dataSource": "aerial-control",
+            "database": "aerial-control",
+            "collection": "google-api-credentials",
+            "filter": {
+              "_id": { "$oid": "66b02787e823dde8a11aaef4" }
+            },
+            "update": {
+              "$set": {
+                "google_api_code": googleApiCode
+              }
+            }
+          });
+          var config = {
+            method: 'post',
+            url: 'https://data.mongodb-api.com/app/data-vefznnv/endpoint/data/v1/action/updateOne',
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Request-Headers': '*',
+              'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+              'Accept': 'application/ejson'
+            },
+            data: data
+          };
+          axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                updateGoogleApiTokens();
+                res.send( JSON.stringify(response.data) )
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+  })()
+
+})
+
+app.post('/update-google-api-tokens', (req, res) => {
+  ; (async () => {
+
+    updateGoogleApiTokens();
+        
+  })()
+
+})
+
+async function updateGoogleApiTokens(){
+
+  var data = JSON.stringify({
+    "collection": "google-api-credentials",
+    "database": "aerial-control",
+    "dataSource": "aerial-control"
+  });
+  var config = {
+    method: 'post',
+    url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vefznnv/endpoint/data/v1/action/findOne',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+      'Accept': 'application/ejson'
+    },
+    data: data
+  };
+  axios(config)
+    .then(function (response) {
+        var googleApiCode = response.data.document.google_api_code;
+        let payload = {
+          grant_type: 'authorization_code',
+          code: googleApiCode,
+          client_id: '591412541832-mtbatq6amcoedgat0lbn020lju7lt1mm.apps.googleusercontent.com',
+          client_secret: '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',
+          redirect_uri: 'https://aerial-control.onrender.com',
+        };
+        
+        axios
+          .post(`https://www.googleapis.com/oauth2/v4/token`, payload, {
+            headers: {
+              'Content-Type': 'application/json;',
+            },
+          })
+          .then((res) => {
+
+            var data = JSON.stringify({
+              "dataSource": "aerial-control",
+              "database": "aerial-control",
+              "collection": "google-api-credentials",
+              "filter": {
+                "_id": { "$oid": "66b02787e823dde8a11aaef4" }
+              },
+              "update": {
+                "$set": {
+                  "access_token": res.data.access_token,
+                  "refresh_token": res.data.refresh_token
+                }
+              }
+            });
+            var config = {
+              method: 'post',
+              url: 'https://data.mongodb-api.com/app/data-vefznnv/endpoint/data/v1/action/updateOne',
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Request-Headers': '*',
+                'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+                'Accept': 'application/ejson'
+              },
+              data: data
+            };
+            axios(config)
+              .then(function (response) {
+                  console.log(JSON.stringify(response.data));
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+
+            return res.data;
+          })
+          .catch((err) => console.log('err: ', err));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+
+}
+
+app.post('/get-2-legged-access-token', (req, res) => {
+    let client_id = '6yNqqgh2UKJmromx7UqoP51x1znihSKhwvwejsAn7DVRg8w7';
+    let client_secret = '606cc7LUzSHEvUxGRkG5UsCpUlZIk6AwWv2VMTDlF7pgPeosnCSe5AQtsVNazcZ1';
+    let base64String = btoa(client_id + ':' + client_secret);
+    var config = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept' : 'application/json',
+        'Authorization' : 'Basic ' + base64String
+      },
+      url: 'https://developer.api.autodesk.com/authentication/v2/token',
+      data: {
+        grant_type : 'client_credentials',
+        scope : 'data:read'
+      }
+    };
+    axios(config)
+      .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          res.send( JSON.stringify(response.data) )
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+    
+})
+
+
+app.post('/get-google-devices', (req, res) => {
+  ; (async () => {
+    await getGoogleApiCredentials();
+    var access_token = googleApiCredentials.access_token;
+    
+    var config = {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'Authorization': 'Bearer ' + access_token
+      },
+      url: 'https://smartdevicemanagement.googleapis.com/v1/enterprises/cdeecc8c-47ca-4a42-8a92-b08cb90c0f08/devices',
+    };
+    axios(config)
+      .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          res.send( JSON.stringify(response.data) )
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+    
+    })()
+
+})
+
+let refreshedGoogleApiCredentials;
+
+async function refreshGoogleApiCredentials(){
+
+  //Get refresh token
+  await getGoogleApiCredentials();
+  var refresh_token = googleApiCredentials.refresh_token;
+
+  //Get new access token using refresh token above
+
+  var config = {
+    method: 'POST',
+    url: 'https://www.googleapis.com/oauth2/v4/token?client_id=591412541832-mtbatq6amcoedgat0lbn020lju7lt1mm.apps.googleusercontent.com&client_secret=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&refresh_token=' + refresh_token + '&grant_type=refresh_token',
+  };
+  axios(config)
+    .then(function (response) {
+        refreshedGoogleApiCredentials = response.data;
+        console.log(refreshedGoogleApiCredentials.data);
+        setTimeout(function(){
+          updateDBGoogleApiCredentials();
+        }, 500);
+        return response;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+}
+
+app.post('/refresh-google-api-credentials', (req, res) => {
+  ; (async () => {
+
+    await refreshGoogleApiCredentials();
+    setTimeout(function(){
+      res.send( refreshedGoogleApiCredentials )
+    }, 1000);
+  })()
+
+})
+
+setInterval(function(){
+    refreshGoogleApiCredentials();
+}, 1000 * 60 * 55)
+
+app.post('/update-google-thermostat-temp', (req, res) => {
+  ; (async () => {
+
+          await getGoogleApiCredentials();
+
+          setTimeout(function(){
+            var accessToken = googleApiCredentials.access_token
+            var coolCelsius = Number(req.body.coolCelsius);
+            var data = {
+                "command" : "sdm.devices.commands.ThermostatTemperatureSetpoint.SetCool",
+                "params" : {
+                "coolCelsius" : coolCelsius
+                }
+            };
+            var config = {
+              method: 'POST',
+              url: 'https://smartdevicemanagement.googleapis.com/v1/enterprises/cdeecc8c-47ca-4a42-8a92-b08cb90c0f08/devices/AVPHwEur0KdKJ3AGRboj7oajio8QqdeOxS71e5_W6fGZ09Bf7-ipD31g_yLzW4bSAFZFqm3e3FAOOhCXFrlWhHPyrGTNJQ:executeCommand?access_token=' + accessToken,
+              contentType: 'application/json; charset=utf-8',
+              dataType: 'json',
+              async: false,
+              data: data
+            };
+            console.log(data)
+            axios(config)
+              .then(function (response) {
+                  res.send( JSON.stringify(response.data) )
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+          }, 2000)
+          
+  })()
+
+})
+
+async function updateDBGoogleApiCredentials(){
+
+  var data = JSON.stringify({
+    "dataSource": "aerial-control",
+    "database": "aerial-control",
+    "collection": "google-api-credentials",
+    "filter": {
+      "_id": { "$oid": "66b02787e823dde8a11aaef4" }
+    },
+    "update": {
+      "$set": {
+        "access_token": refreshedGoogleApiCredentials.access_token,
+      }
+    }
+  });
+  
+  var config = {
+    method: 'POST',
+    url: 'https://data.mongodb-api.com/app/data-vefznnv/endpoint/data/v1/action/updateOne',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': 'gX2cqW8t4sUU2YFcNM65LWxoOoqfD5x2hl4FGZu0ennszi66eCfxg57znevxfvxc',
+      'Accept': 'application/ejson'
+    },
+    data: data
+  };
+  axios(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+}
+
+let myLocks = august.locks();
+setTimeout(function(){
+  console.log(myLocks);
+}, 4000)
+
+app.post('/get-lock-status', (req, res) => {
+  ; (async () => {
+    let lockStatus = await august.status('B718B554C0F1496A8B64704123E64972')
+    res.send( JSON.stringify(lockStatus) )
+  })()
+
+})
+
+app.post('/toggle-lock', (req, res) => {
+  ; (async () => {
+    let lockStatus = await august.status('B718B554C0F1496A8B64704123E64972')
+    if(lockStatus.state.locked){
+      await august.unlock('B718B554C0F1496A8B64704123E64972')
+    } else {
+      await august.lock('B718B554C0F1496A8B64704123E64972')
+    }
+    let newLockStatus = await august.status('B718B554C0F1496A8B64704123E64972')
+    res.send( JSON.stringify(newLockStatus) )
+
+  })()
+
 })
 
 app.get('/controller', checkLogin, (req, res) => {
@@ -78,6 +555,27 @@ app.get('/rooms/backyard', checkLogin, (req, res) => {
 
 app.get('/device-dashboard', checkLogin, (req, res) => {
     res.render('device-dashboard')
+})
+
+app.get('/admin-dashboard', checkAdminLogin, (req, res) => {
+  res.render('admin-dashboard')
+})
+
+app.post('/admin-login', (req, res) => {
+
+    var username = req.body.username;
+    var password = req.body.password;
+    
+    if(username === 'admin' && password === 'Admin123!'){
+      var adminData = req.session.admin_data = {
+        'name' : 'Admin',
+        'access_type' : 'master',
+        'limitless' : true
+      };
+      res.send( JSON.stringify(adminData) )
+    } else {
+      res.send( JSON.stringify({ 'response' : 'Login failed.' }) )
+    }
 })
 
 app.post('/guest-login', (req, res) => {
@@ -105,6 +603,12 @@ app.post('/guest-login', (req, res) => {
                 foundValue = array[i];
                 break;
               }
+          }
+
+          if(foundValue !== 0 && (reservationEmailOrPhone === "test@test.com")){
+            req.session.reservation_data = foundValue;
+            res.send( JSON.stringify(foundValue) )
+            return foundValue;
           }
 
           if(foundValue !== 0 && ((foundValue.guest_email === reservationEmailOrPhone) || (foundValue.guest_phone === reservationEmailOrPhone) )){

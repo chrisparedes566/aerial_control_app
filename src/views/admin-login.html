@@ -297,45 +297,22 @@
     </head>
     <body>
         <div class="container" id="container">
-            <div class="form-container sign-up-container">
-                <form action="#">
-                    <h1>Create Account</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>or use your email for registration</span>
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button>Sign Up</button>
-                </form>
-            </div>
             <div class="form-container sign-in-container">
-                <form id="guest-login" action="/guest-login">
-                    <h1 style="margin-bottom: 30px">Guest Login</h1>
-                    <div class="social-container" style="display:none">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span style="display: none">or use your account</span>
-                    <input id="email-or-phone" type="text" placeholder="Email or phone" />
-                    <input id="reservation-id" type="text" placeholder="Reservation #" />
-                    <a href="#" style="display: none; margin-bottom: 24px">Forgot your password?</a>
-                    <button style="margin-top:30px">Login</button>
+                <form id="admin-login">
+                    <h1 style="margin-bottom: 30px">Admin Login</h1>
+                    <input id="username" type="text" placeholder="Username" />
+                    <input id="password" type="text" placeholder="Password" />
+                    <button style="margin-top:30px" onclick="e.preventDefault()">Login</button>
                     <div class="messages">
                         <p class="message"></p>
                     </div>
                 </form>
             </div>
-            <div class="or"></div>
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">
-                        <h1>Welcome Back!</h1>
-                        <p>To keep connected with us please login with your personal info</p>
+                        <h1>Admin Login</h1>
+                        <p>This is the admin login page.</p>
                         <button class="ghost" id="signIn">Sign In</button>
                     </div>
                     <div class="overlay-panel overlay-right">
@@ -366,39 +343,36 @@
                 container.classList.remove("right-panel-active");
             });
 
-            var requestLogin = function(reservation_id, email_or_phone){
+            var requestLogin = function(username, password){
                 $.ajax({
                     type: 'POST',
-                    url: '/guest-login',
+                    url: '/admin-login',
                     data: {
-                        'reservation_id' : reservation_id,
-                        'email_or_phone' : email_or_phone
+                        'username' : username,
+                        'password' : password
                     },
                     dataType: 'json',
                     responseType: 'json',
                     success: function(result) {
                         console.log(result);
-                        reservation_data = result;
-                        if(result){
-                            reservation_data = result;
-                            document.cookie = 'reservation_data=' + JSON.stringify(result);
-                            window.location.href = "/home-dashboard";
+                        admin_data = result;
+                        if(result.name){
+                            admin_data = result;
+                            document.cookie = 'admin_data=' + JSON.stringify(result);
+                            window.location.href = "/admin-dashboard";
                         } else {
-                            $('.messages .message').text(result.status);
+                            $('.messages .message').text(result.response);
                         }
                     }
                 });
             }
 
-            $("#guest-login").submit(function(e) {
+            $("#admin-login").submit(function(e) {
 
                 e.preventDefault(); // avoid to execute the actual submit of the form.
                 $('.messages .message').text('');
 
-                var form = $(this);
-                var actionUrl = form.attr('action');
-
-                requestLogin($('#reservation-id').val(), $('#email-or-phone').val());
+                requestLogin($('#username').val(), $('#password').val());
             });
         </script>
         <script src="/js/main.js"></script>

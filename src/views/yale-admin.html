@@ -297,100 +297,71 @@
     </head>
     <body>
         <div class="container" id="container">
-            <div class="form-container sign-up-container">
-                <form action="#">
-                    <h1>Create Account</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>or use your email for registration</span>
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button>Sign Up</button>
-                </form>
-            </div>
             <div class="form-container sign-in-container">
-                <form id="guest-login" action="/guest-login">
-                    <h1 style="margin-bottom: 30px">Guest Login</h1>
-                    <div class="social-container" style="display:none">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span style="display: none">or use your account</span>
-                    <input id="email-or-phone" type="text" placeholder="Email or phone" />
-                    <input id="reservation-id" type="text" placeholder="Reservation #" />
-                    <a href="#" style="display: none; margin-bottom: 24px">Forgot your password?</a>
+                <!-- <form id="yale-login" action="/yale-login">
+                    <h1 style="margin-bottom: 30px">Yale Login</h1>
+                    <input id="id" type="text" placeholder="ID" />
+                    <input id="username" type="text" placeholder="Username" />
+                    <input id="password" type="text" placeholder="Password" />
                     <button style="margin-top:30px">Login</button>
+                    <div class="messages">
+                        <p class="message"></p>
+                    </div>
+                </form> -->
+                <form id="verification-form" action="/yale-verify">
+                    <h1 style="margin-bottom: 30px">Yale Verify</h1>
+                    <input id="verification" type="text" placeholder="Verification Code" />
+                    <button style="margin-top:30px">Verify</button>
                     <div class="messages">
                         <p class="message"></p>
                     </div>
                 </form>
             </div>
-            <div class="or"></div>
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <h1>Welcome Back!</h1>
-                        <p>To keep connected with us please login with your personal info</p>
-                        <button class="ghost" id="signIn">Sign In</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <img class="airbnb-logo" src="/css/images/airbnb_logo_white.png" />
-                        <h1>Hello, Guests!</h1>
-                        <p>Have a reservation with us? Login with Airbnb to begin your stay</p>
-                        <button style="display: none" class="ghost" id="signUp">Login with
-                            <div class="logo-container">
-                                <img class="airbnb-logo" src="/css/images/airbnb_logo_white.png">
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
-
         <script>
-            const signUpButton = document.getElementById('signUp');
-            const signInButton = document.getElementById('signIn');
-            const container = document.getElementById('container');
-            var reservation_data;
-
-            signUpButton.addEventListener('click', () => {
-                container.classList.add("right-panel-active");
-            });
-
-            signInButton.addEventListener('click', () => {
-                container.classList.remove("right-panel-active");
-            });
-
-            var requestLogin = function(reservation_id, email_or_phone){
+            var requestLogin = function(id, username, password){
                 $.ajax({
                     type: 'POST',
-                    url: '/guest-login',
+                    url: '/yale-login',
                     data: {
-                        'reservation_id' : reservation_id,
-                        'email_or_phone' : email_or_phone
+                        'id' : id,
+                        'username' : username,
+                        'password' : password
+                    },
+                    dataType: 'json',
+                    responseType: 'json',
+                    success: function(result) {
+
+                        if(result.status_code === "200"){
+                            $('#verification-form').show();
+                        } else {
+                            $('.messages .message').text("Login unsuccessful.");
+                        }
+                        console.log(result);
+                    }
+                });
+            }
+
+            var verifyLogin = function(verificationCode, id, username, password){
+                $.ajax({
+                    type: 'POST',
+                    url: '/yale-verification',
+                    data: {
+                        'id' : id,
+                        'username' : username,
+                        'password' : password,
+                        'verification_code' : verificationCode
                     },
                     dataType: 'json',
                     responseType: 'json',
                     success: function(result) {
                         console.log(result);
-                        reservation_data = result;
-                        if(result){
-                            reservation_data = result;
-                            document.cookie = 'reservation_data=' + JSON.stringify(result);
-                            window.location.href = "/home-dashboard";
-                        } else {
-                            $('.messages .message').text(result.status);
-                        }
+                        window.location.href = "/device-dashboard";
                     }
                 });
             }
 
-            $("#guest-login").submit(function(e) {
+            $("#yale-login").submit(function(e) {
 
                 e.preventDefault(); // avoid to execute the actual submit of the form.
                 $('.messages .message').text('');
@@ -398,7 +369,17 @@
                 var form = $(this);
                 var actionUrl = form.attr('action');
 
-                requestLogin($('#reservation-id').val(), $('#email-or-phone').val());
+                requestLogin($('#id').val(), $('#username').val(), $('#password').val());
+            });
+
+            $("#verification-form").submit(function(e) {
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+                $('.messages .message').text('');
+
+                var form = $(this);
+                var actionUrl = form.attr('action');
+
+                verifyLogin($('#verification').val(),$('#id').val(), $('#username').val(), $('#password').val());
             });
         </script>
         <script src="/js/main.js"></script>
