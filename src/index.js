@@ -452,6 +452,7 @@ app.post('/update-google-thermostat-temp', (req, res) => {
             console.log(data)
             axios(config)
               .then(function (response) {
+                  refreshGoogleApiCredentials();
                   res.send( JSON.stringify(response.data) )
               })
               .catch(function (error) {
