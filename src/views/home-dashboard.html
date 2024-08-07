@@ -629,7 +629,7 @@ section#rooms-list-section {
                       <div class="temp__comet"></div>
                       <canvas class="temp__fizz"></canvas>
                       <div class="temp__label">Temp</div>
-                      <div class="temp__value">73</div>
+                      <div class="temp__value">--</div>
                       <div class="temp__dial"></div>
                     </div>
                     <script>
@@ -830,6 +830,10 @@ function setNewTemp(temp){
 var fToC = function(f) {
   return (f - 32) * (5/9);
 };
+
+function cToF(c) {
+    return ((c * 9.0 / 5.0) + 32.0);
+}
 
 $('.temp').bind('mouseup touchend', function(e){
     var temp = fToC(Number($('.temp__value').text()));
@@ -1041,7 +1045,27 @@ $('.temp').bind('mouseup touchend', function(e){
                   $( '#entrance-light-switch' ).find('.device-status label').text( 'ON' );
               }
           })
+
+          updateSetTempValue();
       })
+
+      function updateSetTempValue(){
+        $.ajax({
+              type: 'POST',
+              url: '/get-current-thermostat-temp',
+              success: function(result) {
+                console.log(result.traits);
+                var setTempC = result.traits["sdm.devices.traits.ThermostatTemperatureSetpoint"].coolCelsius;
+                var temp = cToF(Number(setTempC));
+                $('.temp__value').html(parseInt(temp));
+              }
+          });
+      }
+
+      setInterval(function(){
+        updateSetTempValue();
+      }, 1000 * 60 * 0.5)
+
   </script>
 	</body>
 </html>

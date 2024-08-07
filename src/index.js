@@ -208,7 +208,8 @@ app.post('/update-google-auth-code', (req, res) => {
             },
             "update": {
               "$set": {
-                "google_api_code": googleApiCode
+                "google_api_code": googleApiCode,
+                "last_update" : Date.now()
               }
             }
           });
@@ -327,6 +328,32 @@ async function updateGoogleApiTokens(){
 
 
 }
+
+app.post('/get-current-thermostat-temp', (req, res) => {
+
+    getGoogleApiCredentials().then(function(){
+      var access_token = googleApiCredentials.access_token;
+      var config = {
+        method: 'GET',
+        url: 'https://smartdevicemanagement.googleapis.com/v1/enterprises/' + process.env.GOOGLE_PROJECT_ID + '/devices',
+        headers:{
+          'Content-Type' : 'application/json',
+          'Authorization': 'Bearer ' + access_token
+        }
+      };
+      console.log(config)
+      axios(config)
+        .then(function (response) {
+          res.send(response.data.devices[0]);
+        })
+        .catch(function (error) {
+            console.log(error);
+      });
+    });
+
+      
+})
+
 
 app.post('/get-2-legged-access-token', (req, res) => {
     let client_id = process.env.AUTODESK_CLIENT_ID;
@@ -503,9 +530,9 @@ async function updateDBGoogleApiCredentials(){
 }
 
 let myLocks = august.locks();
-setTimeout(function(){
-  console.log(myLocks);
-}, 4000)
+// setTimeout(function(){
+//   console.log(myLocks);
+// }, 4000)
 
 app.post('/get-lock-status', (req, res) => {
   ; (async () => {
