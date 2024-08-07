@@ -1,12 +1,12 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT || process.env.DEV_PORT;
+const port = process.env.PORT || 4000;
 const cons = require('consolidate');
 const path = require('path');
 const request = require('request');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-require('dotenv-extended').config()
+require('dotenv').config()
 
 var axios = require('axios');
 
