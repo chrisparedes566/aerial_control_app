@@ -1365,11 +1365,13 @@ $('.temp').bind('mouseup touchend', function(e){
     <script src="/js/main.js"></script>
 		<script src="/js/cookie.min.js"></script>
     <script>
+      setTimeout(function(){
         if(getUserDataFromCookie("guest_name") !== undefined){
             let name = getUserDataFromCookie("guest_name");
             let firstName = name.split(" ")[0];
             $('.users-first-name').text(', ' + firstName);
         }
+      }, 500)
     </script>
     <script>
       var entranceLightStatus = 0;
