@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html class="dark-mode">
 	<head>
 		<title>Aerial Control - Kendall Keys Dashboard</title>
 		<meta charset="utf-8" />
@@ -13,6 +13,36 @@
         <link rel="icon" type="image/x-icon" href="/css/images/aerial-icon.png">
 
         <style>
+          html.dark-mode,
+          html.dark-mode body {
+            background: #0d0e1e;
+          }
+          html.dark-mode div,
+          html.dark-mode p,
+          html.dark-mode span,
+          html.dark-mode label,
+          html.dark-mode h1,
+          html.dark-mode h2,
+          html.dark-mode h3,
+          html.dark-mode ul,
+          html.dark-mode i,
+          html.dark-mode li.on.lock .fa-lock
+          html.dark-mode li.off.lock .fa-lock {
+              color: #d8d8d8 !important;
+              box-shadow: none !important;
+          }
+          html.dark-mode li.on span,
+          html.dark-mode li.off span,
+          html.dark-mode .tile_icon {
+              border: 1px solid #a7a7a7 !important;
+          }
+
+          html.dark-mode .rooms-container{
+            border: 1px solid #a7a7a7;
+            border-left: 0;
+            border-right: 0;
+          }
+
             :root {
   touch-action: pan-x pan-y;
   height: 100% 
@@ -326,7 +356,7 @@
             /** End Section Footer Style **/
 
             li.off.lock .fa-lock {
-                color: rgba(49, 69, 106, 1) !important;
+                color: rgba(49, 69, 106, 1);
             }
             .device-label {
     margin-bottom: 8px;
@@ -446,6 +476,9 @@ section#rooms-list-section {
 #sha_header_bar span.heading {
     display: flex;
     flex-wrap: nowrap;
+}
+i.fa.fa-adjust {
+    color: rgba(49, 69, 106, 1);
 }
         </style>
         <script>
@@ -596,11 +629,28 @@ section#rooms-list-section {
                           wifiElem.find('.device-status label').html('Connected');
                         }
                       </script>
-                      <li class="off">
-                        <span>
-                          <i class="fa fa-snowflake-o"></i>
+                      <li id="display-mode" class="off" onclick="toggleDisplayModes($(this))">
+                        <div class="device-label">
+                            <label>Display</label>
+                        </div>
+                        <span >
+                          <i class="fa fa-adjust" aria-hidden="true"></i>
                         </span>
+                        <div class="device-status">
+                            <label>DARK MODE</label>
+                        </div>
                       </li>
+                      <script>
+                        function toggleDisplayModes(elem){
+                          var modeLabel = elem.find('.device-status label');
+                          $('html').toggleClass('dark-mode');
+                          if($('.dark-mode').length){
+                            modeLabel.html('DARK MODE')
+                          } else {
+                            modeLabel.html('LIGHT MODE')
+                          }
+                        }
+                      </script>
                     </ul>
                   </div>
                 </div>
@@ -1050,8 +1100,44 @@ $('.temp').bind('mouseup touchend', function(e){
 
         })
 
+        var currentTemp = Number($('.temp__value').text());
+        var updateTemp;
+
         setTimeout(function(){
+          currentTemp = Number($('.temp__value').text());
           updateSetTempValue();
+          $(".fa-plus").click(function(){
+              currentTemp = Number($('.temp__value').text());
+              clearInterval(updateSetTemp);
+              if(updateTemp){
+                  clearTimeout(updateTemp);
+              }
+              currentTemp = currentTemp+1
+              $('.temp__value').text(currentTemp)
+              updateTemp = setTimeout(function(){
+                  console.log('update temp to: ' + currentTemp);
+                  setNewTemp(fToC(currentTemp));
+                  updateSetTemp = setInterval(function(){
+                  updateSetTempValue();
+                }, 1000 * 60 * 0.4)
+              }, 4000)   
+          });
+          $(".fa-minus").click(function(){
+              currentTemp = Number($('.temp__value').text());
+              clearInterval(updateSetTemp);
+              if(updateTemp){
+                  clearTimeout(updateTemp);
+              }
+              currentTemp = currentTemp-1
+              $('.temp__value').text(currentTemp)
+              updateTemp = setTimeout(function(){
+                  console.log('update temp to: ' + currentTemp)
+                  setNewTemp(fToC(currentTemp))
+                  updateSetTemp = setInterval(function(){
+                  updateSetTempValue();
+                }, 1000 * 60 * 0.4)
+              }, 4000)    
+          });
         }, 4000)        
 
       function updateSetTempValue(){
@@ -1067,10 +1153,23 @@ $('.temp').bind('mouseup touchend', function(e){
           });
       }
 
-      setInterval(function(){
+      var updateSetTemp = setInterval(function(){
         updateSetTempValue();
       }, 1000 * 60 * 0.4)
 
   </script>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/66b45d56146b7af4a4376e55/1i4o8p6rp';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 	</body>
 </html>
