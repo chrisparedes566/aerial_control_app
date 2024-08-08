@@ -453,7 +453,7 @@ app.post('/refresh-google-api-credentials', (req, res) => {
 
 setInterval(function(){
     refreshGoogleApiCredentials();
-}, 1000 * 60 * 55)
+}, 1000 * 60)
 
 app.post('/update-google-thermostat-temp', (req, res) => {
   ; (async () => {

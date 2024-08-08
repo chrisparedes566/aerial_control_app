@@ -1046,8 +1046,11 @@ $('.temp').bind('mouseup touchend', function(e){
               }
           })
 
+        })
+
+        setTimeout(function(){
           updateSetTempValue();
-      })
+        }, 4000)        
 
       function updateSetTempValue(){
         $.ajax({
@@ -1064,7 +1067,7 @@ $('.temp').bind('mouseup touchend', function(e){
 
       setInterval(function(){
         updateSetTempValue();
-      }, 1000 * 60 * 0.5)
+      }, 1000 * 60 * 0.4)
 
   </script>
 	</body>

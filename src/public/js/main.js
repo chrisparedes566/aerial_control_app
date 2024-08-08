@@ -43,10 +43,11 @@ $(document).on('click', '.left-menu, .left-nav .fa-close', function(){
 
 $(document).ready(function(){
     checkCredentials();
-    setTimeout(function(){
-        checkGoogleAuthCode();
-    },2000)
 });
+
+setTimeout(function(){
+    checkGoogleAuthCode();
+},3000)
 
 function getUserDataFromCookie(key = null){
     if($.cookie("reservation_data") !== null && (key !== null)){
