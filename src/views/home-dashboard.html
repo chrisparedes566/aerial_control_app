@@ -1371,6 +1371,11 @@ $('.temp').bind('mouseup touchend', function(e){
             let firstName = name.split(" ")[0];
             $('.users-first-name').text(', ' + firstName);
         }
+        if(getUserDataFromCookie() !== undefined){
+            let name = getUserDataFromCookie().reservation_data.guest_name;
+            let firstName = name.split(" ")[0];
+            $('.users-first-name').text(', ' + firstName);
+        }
       }, 500)
     </script>
     <script>
