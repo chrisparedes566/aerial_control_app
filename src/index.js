@@ -154,7 +154,7 @@ app.get('/rooms', checkLogin, (req, res) => {
   res.render('rooms')
 })
 
-app.get('/home-dashboard', (req, res) => {
+app.get('/home-dashboard', checkLogin, (req, res) => {
   res.render('home-dashboard')
 })
 
