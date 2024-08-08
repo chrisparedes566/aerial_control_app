@@ -140,7 +140,7 @@ function checkAdminLogin(req, res, next) {
 app.get('/', (req, res) => {
   // Store state in the session
   if(req.session.reservation_data){
-    res.render('device-dashboard')
+    res.render('home-dashboard')
   } else {
     res.render('login')
   }
@@ -565,9 +565,9 @@ app.get('/rooms/backyard', checkLogin, (req, res) => {
   res.render('room')
 })
 
-app.get('/device-dashboard', checkLogin, (req, res) => {
-    res.render('device-dashboard')
-})
+// app.get('/device-dashboard', checkLogin, (req, res) => {
+//     res.render('device-dashboard')
+// })
 
 app.get('/admin-dashboard', checkAdminLogin, (req, res) => {
   res.render('admin-dashboard')
