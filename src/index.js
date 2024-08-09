@@ -619,7 +619,7 @@ app.post('/guest-login', (req, res) => {
 
           if(foundValue !== 0 && (reservationEmailOrPhone === process.env.TEST_EMAIL)){
             req.session.reservation_data = foundValue;
-            res.send( JSON.stringify(foundValue) )
+            res.send( JSON.stringify({ 'status_code' : '100', reservation_data : foundValue }) )
             return foundValue;
           }
 
