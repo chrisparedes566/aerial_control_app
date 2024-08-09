@@ -380,7 +380,7 @@
                     success: function(result) {
                         console.log(result);
                         reservation_data = result;
-                        if(result){
+                        if(result.status_code === '100'){
                             reservation_data = result;
                             document.cookie = 'reservation_data=' + JSON.stringify(result);
                             window.location.href = "/home-dashboard";
