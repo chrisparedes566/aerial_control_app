@@ -6,6 +6,7 @@ const path = require('path');
 const request = require('request');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const { MongoClient } = require('mongodb');
 
 if(port === 4000){
   require('dotenv').config()
@@ -52,34 +53,32 @@ app.post('/get-google-api-credentials', (req, res) => {
 
 })
 
+async function getAllDocuments(databaseName, collectionName) {
+  const uri = "mongodb+srv://aerial-control-admin:Chris6964549$$$@aerial-control.4egpsaf.mongodb.net/google-api-credentials"; // Your MongoDB connection string
+  const client = new MongoClient(uri);
+
+  try {
+      await client.connect();
+      const database = client.db(databaseName);
+      const collection = database.collection(collectionName);
+
+      const allDocuments = await collection.find({}).toArray();
+      //console.log(`All documents in ${collectionName}:`, allDocuments);
+      googleApiCredentials = allDocuments;
+      return allDocuments;
+  } finally {
+      await client.close();
+  }
+}
+
+// Example usage:
+getAllDocuments('aerial-control', 'google-api-credentials')
+  .catch(console.error);
 
 async function getGoogleApiCredentials(){
 
-        var data = JSON.stringify({
-          "collection": "google-api-credentials",
-          "database": "aerial-control",
-          "dataSource": "aerial-control"
-        });
-        var config = {
-          method: 'post',
-          url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vefznnv/endpoint/data/v1/action/findOne',
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Request-Headers': '*',
-            'api-key': process.env.MONGO_API_KEY,
-            'Accept': 'application/ejson'
-          },
-          data: data
-        };
-         await axios(config)
-          .then(function (response) {
-            googleApiCredentials = response.data.document;
-            return response.data.document;
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
-      
+    return googleApiCredentials;
+
 }
 
 
@@ -332,7 +331,7 @@ async function updateGoogleApiTokens(){
 app.post('/get-current-thermostat-temp', (req, res) => {
 
     getGoogleApiCredentials().then(function(){
-      var access_token = googleApiCredentials.access_token;
+      var access_token = googleApiCredentials[0].access_token;
       var config = {
         method: 'GET',
         url: 'https://smartdevicemanagement.googleapis.com/v1/enterprises/' + process.env.GOOGLE_PROJECT_ID + '/devices',
@@ -387,7 +386,7 @@ app.post('/get-2-legged-access-token', (req, res) => {
 app.post('/get-google-devices', (req, res) => {
   ; (async () => {
     await getGoogleApiCredentials();
-    var access_token = googleApiCredentials.access_token;
+    var access_token = googleApiCredentials[0].access_token;
     
     var config = {
       method: 'get',
@@ -461,7 +460,7 @@ app.post('/update-google-thermostat-temp', (req, res) => {
           await getGoogleApiCredentials();
           console.log('test')
           setTimeout(function(){
-            var accessToken = googleApiCredentials.access_token
+            var accessToken = googleApiCredentials[0].access_token
             var coolCelsius = Number(req.body.coolCelsius);
             var data = {
                 "command" : "sdm.devices.commands.ThermostatTemperatureSetpoint.SetCool",

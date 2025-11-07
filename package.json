@@ -16,7 +16,7 @@
     "google-auth-library": "^9.13.0",
     "googleapis": "^140.0.1",
     "homebridge-google-nest-sdm": "^1.1.23",
-    "mongodb": "^6.7.0",
+    "mongodb": "^6.20.0",
     "mongoose": "^8.4.1",
     "node-wifi": "^2.0.16",
     "passport": "^0.7.0",
